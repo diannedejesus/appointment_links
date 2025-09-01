@@ -51,7 +51,7 @@ export async function selectTimeSlots (req,res) {
     }
 }
 
-export async function resendEmail (req, res){
+export async function resendEmail (req, res){ //uses ews
 
     try{
         const reservationData = await ReservedSlotDB.findOne({linkId: req.body.idFromJSFile})
@@ -107,7 +107,7 @@ export async function createTimeSlot (req, res){
     }
 }
 
-export async function assignTimeSlot (req, res){
+export async function assignTimeSlot (req, res){ //uses ews
     try{
         await TimeSlotDB.findOneAndUpdate({linkId: req.body.idFromJSFile},{
             selectedSlot: new Date(req.body.dateTimeFromJSFile),

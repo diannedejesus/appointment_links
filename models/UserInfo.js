@@ -1,4 +1,3 @@
-//const { text } = require('express')
 import mongoose from 'mongoose'
 
 const UserInfoSchema = new mongoose.Schema({

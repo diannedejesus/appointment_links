@@ -1,7 +1,4 @@
-import { text } from 'express'
 import mongoose from 'mongoose'
-
-
 
 const ReservationSchema = new mongoose.Schema({
   owner: {

@@ -1,6 +1,6 @@
 import express from 'express'
-const router = express.Router()
 import * as homeController from '../controllers/home.js'
+const router = express.Router()
 
 router.get('/', homeController.getIndex) 
 

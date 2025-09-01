@@ -1,7 +1,7 @@
 import express from 'express'
-const router = express.Router()
 import * as bookingController from '../controllers/reservations.js'
 import {ensureAuth, ensureGuest} from '../middleware/auth.js';
+const router = express.Router()
 
 router.get('/', ensureAuth, bookingController.setDates)
 router.get('/selectTimeSlot', bookingController.selectTimeSlots)

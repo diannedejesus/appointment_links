@@ -6,10 +6,9 @@ import connectDB from './config/database.js'
 import loginRoutes from './routes/login.js'
 import signupRoutes from './routes/signup.js'
 import homeRoutes from './routes/home.js'
-//const calendarRoutes = require('./routes/calendar')
 import bookingRoutes from './routes/reservations.js'
+//const calendarRoutes = require('./routes/calendar')
 
-//import mongoose from 'mongoose'
 import passport from 'passport' // auth middleware
 import session from 'express-session' // Keeps users session logged in and creates the cookie
 import MongoStore from 'connect-mongo' //saving session data in the db
@@ -21,7 +20,6 @@ dotenv.config({path: './config/.env'})
 // Passport config
 import passportConfig from './config/passport.js'
 passportConfig(passport)
-
 
 connectDB()
 
@@ -36,7 +34,6 @@ app.use(
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({ mongoUrl: process.env.DB_STRING})
-      //forget about session storage now
     })
   )
 

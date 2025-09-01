@@ -18,19 +18,23 @@ export async function postLogin (req, res, next) {
     console.log('errors', errors)
     return res.redirect('/');
   }
+
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
 
   passport.authenticate('local', (err, user, info) => {
     if(err) return next(err);
+
     if(!user) {
       //req.flash('errors', info);
       console.log('errors2', info)
       return res.redirect('/');
     }
+
     req.logIn(user, (err) => {
       if(err) return next(err);
       res.redirect(req.session.returnTo || '/setDates')
     })
+
   })(req, res, next)
 }
 
@@ -48,6 +52,7 @@ export async function configureCalendar (req, res) {
     console.log('errors', errors)
     return res.redirect('/');
   }
+  
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
 
   const algorithm = "aes-256-cbc"; 
