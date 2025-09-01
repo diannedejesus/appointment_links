@@ -1,13 +1,15 @@
 import express from 'express'
 const app = express()
 import connectDB from './config/database.js'
+
+//routes path
+import loginRoutes from './routes/login.js'
+import signupRoutes from './routes/signup.js'
 import homeRoutes from './routes/home.js'
 //const calendarRoutes = require('./routes/calendar')
 import bookingRoutes from './routes/reservations.js'
-//routes path
-import loginRoutes from './routes/login.js' //import auth routes from local modules
-import signupRoutes from './routes/signup.js'
-import mongoose from 'mongoose'
+
+//import mongoose from 'mongoose'
 import passport from 'passport' // auth middleware
 import session from 'express-session' // Keeps users session logged in and creates the cookie
 import MongoStore from 'connect-mongo' //saving session data in the db

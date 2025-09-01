@@ -1,4 +1,3 @@
-import passport from'passport';
 import UserModel from '../models/UserInfo.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt';

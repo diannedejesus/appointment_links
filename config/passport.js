@@ -1,5 +1,4 @@
 import lstrat from 'passport-local';
-import mongoose from 'mongoose';
 import User from '../models/UserInfo.js';
 import bcrypt from 'bcrypt';
 
