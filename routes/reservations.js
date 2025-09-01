@@ -1,7 +1,7 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const bookingController = require('../controllers/reservations')
-const {ensureAuth, ensureGuest} = require('../middleware/auth');
+import * as bookingController from '../controllers/reservations.js'
+import {ensureAuth, ensureGuest} from '../middleware/auth.js';
 
 router.get('/', ensureAuth, bookingController.setDates)
 router.get('/selectTimeSlot', bookingController.selectTimeSlots)
@@ -14,4 +14,4 @@ router.put('/assignTimeSlot', bookingController.assignTimeSlot)
 
 router.delete('/deleteDates', bookingController.deleteDates)
 
-module.exports = router
+export default router

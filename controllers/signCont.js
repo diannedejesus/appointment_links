@@ -1,13 +1,14 @@
-const passport = require('passport');
-const User = require('../models/UserInfo');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
+import passport from'passport';
+import UserModel from '../models/UserInfo.js';
+import validator from 'validator';
+import bcrypt from 'bcrypt';
 
-module.exports = {
-  getPage: async (req, res) => {
+
+  export async function getPage(req, res) {
     res.render('signup', {msg: 'none'});
-  },
-  postUser: async (req, res, next) => {
+  }
+
+  export async function postUser(req, res, next) {
     const errors = [];
     if(!validator.isEmail(req.body.email)) {
       errors.push({msg: 'not a valid email for reg'});
@@ -22,35 +23,56 @@ module.exports = {
       req.flash('errors', errors);
       return res.redirect('../signup');
     }
+
     req.body.email = validator.normalizeEmail(req.body.email, {gmail_remove_dots: false});
+
     const hashPass = await bcrypt.hash(req.body.password, 10);
-    const user = new User({
-      //username: req.body.username,
+    const user = new UserModel({
       email: req.body.email,
       password: hashPass
-      }
-    )
-    User.findOne({$or: [
-      //{username: req.body.username},
-      {email: req.body.email}
-    ]}, (err, doc) => {
-      if(err) return next(err);
-      if(doc) {
-        req.flash('errors', {msg: 'an account with that email/username already exists'});
-        return res.redirect('../signup')
-      }
-      user.save((err) => {
-        if (err) { return next(err) }
+    })
+
+    try{
+      const isUserPresent = await UserModel.findOne({ email: req.body.email })
+      if(isUserPresent) {
+        console.error('an account with that email/username already exists')  
+        //req.flash('errors', {msg: 'an account with that email/username already exists'});
+          return res.redirect('../signup')
+      }else{
+        await user.save();
         req.logIn(user, (err) => {
-          if (err) {
-            return next(err)
-          }
+          if (err) { return next(err) }
           res.redirect('/setDates')
         })
-      })
-    })
-  },
-  logout:(req, res) => {
+      }
+    }catch (error){
+      console.error('Error:', error);
+    }
+    
+
+    // UserModel.findOne({$or: [
+    //   //{username: req.body.username},
+    //   {email: req.body.email}
+    // ]}, (err, doc) => {
+    //   if(err) return next(err);
+    //   if(doc) {
+    //     req.flash('errors', {msg: 'an account with that email/username already exists'});
+    //     return res.redirect('../signup')
+    //   }
+    //   user.save((err) => {
+    //     if (err) { return next(err) }
+    //     req.logIn(user, (err) => {
+    //       if (err) {
+    //         return next(err)
+    //       }
+    //       res.redirect('/setDates')
+    //     })
+    //   })
+    // })
+
+  }
+
+  export function logout(req, res) {
     req.logout()
     req.session.destroy((err) => {
       if (err) console.log('Error : Failed to destroy the session during logout.', err)
@@ -58,4 +80,3 @@ module.exports = {
       res.redirect('/')
     })
   }
-}

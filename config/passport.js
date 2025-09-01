@@ -1,10 +1,10 @@
-const lstrat = require('passport-local').Strategy;
-const mongoose = require('mongoose');
-const User = require('../models/UserInfo');
-const bcrypt = require('bcrypt');
+import lstrat from 'passport-local';
+import mongoose from 'mongoose';
+import User from '../models/UserInfo.js';
+import bcrypt from 'bcrypt';
 
 //export to server.js
- module.exports = function(passport) {
+export default function(passport) {
    passport.use(new lstrat({
      usernameField: 'email' //set up usernameField to be email field in inputs
    }, async (email, password, done) => {
@@ -30,7 +30,17 @@ const bcrypt = require('bcrypt');
     done(null, user.id)
   })
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => done(err, user))
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findOne({_id: id})
+      if(user){
+        done(null, user)
+      }else{
+        done(null, false)
+      }
+    } catch (error) {
+      return done(error, false);
+    }
+    //User.findById(id, (err, user) => done(err, user))
   })
  }

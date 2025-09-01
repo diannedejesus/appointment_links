@@ -1,13 +1,13 @@
-const express = require('express') //copied and pasted from microsoft nothing new needs to be changed
-const passport = require('passport')
+import express from 'express' //copied and pasted from microsoft nothing new needs to be changed
+import passport from 'passport'
 const router = express.Router()
-const loginCont = require('../controllers/loginCont');
-const {ensureAuth, ensureGuest} = require('../middleware/auth');
+import * as loginCont from '../controllers/loginCont.js';
+import {ensureAuth, ensureGuest} from '../middleware/auth.js';
 
 router.get('/', loginCont.getPage);
 router.post('/', loginCont.postLogin);
 router.get('/configure', loginCont.getConfigureCalendar);
 router.post('/configure', loginCont.configureCalendar);
 
-module.exports = router
+export default router
  

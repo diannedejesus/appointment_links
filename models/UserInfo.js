@@ -1,5 +1,5 @@
 //const { text } = require('express')
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const UserInfoSchema = new mongoose.Schema({
   email: {
@@ -20,4 +20,4 @@ const UserInfoSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model('UserInfo', UserInfoSchema)
+export default mongoose.model('UserInfo', UserInfoSchema)

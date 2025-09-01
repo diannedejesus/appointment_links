@@ -1,5 +1,5 @@
-const { text } = require('express')
-const mongoose = require('mongoose')
+import { text } from 'express'
+import mongoose from 'mongoose'
 
 
 
@@ -34,4 +34,4 @@ const ReservationSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model('Reservation', ReservationSchema)
+export default mongoose.model('Reservation', ReservationSchema)

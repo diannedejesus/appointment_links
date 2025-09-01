@@ -1,21 +1,25 @@
-const express = require('express')
+import express from 'express'
 const app = express()
-const connectDB = require('./config/database')
-const homeRoutes = require('./routes/home')
-const calendarRoutes = require('./routes/calendar')
-const bookingRoutes = require('./routes/reservations')
+import connectDB from './config/database.js'
+import homeRoutes from './routes/home.js'
+//const calendarRoutes = require('./routes/calendar')
+import bookingRoutes from './routes/reservations.js'
 //routes path
-const loginRoutes = require('./routes/login') //import auth routes from local modules
-const signupRoutes = require('./routes/signup')
-const mongoose = require('mongoose')
-const passport = require('passport') // auth middleware
-const session = require('express-session') // Keeps users session logged in and creates the cookie
-const MongoStore = require('connect-mongo') //saving session data in the db
+import loginRoutes from './routes/login.js' //import auth routes from local modules
+import signupRoutes from './routes/signup.js'
+import mongoose from 'mongoose'
+import passport from 'passport' // auth middleware
+import session from 'express-session' // Keeps users session logged in and creates the cookie
+import MongoStore from 'connect-mongo' //saving session data in the db
 
-require('dotenv').config({path: './config/.env'})
+import dotenv from 'dotenv'
+dotenv.config({path: './config/.env'})
+
 
 // Passport config
-require('./config/passport')(passport)
+import passportConfig from './config/passport.js'
+passportConfig(passport)
+
 
 connectDB()
 
@@ -42,8 +46,8 @@ app.use('/', homeRoutes)
 app.use('/setDates', bookingRoutes)
 app.use('/login', loginRoutes)
 app.use('/signup', signupRoutes)
-app.use('/calendar', calendarRoutes)
+//app.use('/calendar', calendarRoutes)
 
 app.listen(process.env.PORT, ()=>{
-    console.log('Server is running, you better catch it!')
-})    
+    console.log(`Server is running on PORT: ${process.env.PORT} , you better catch it!`)
+})

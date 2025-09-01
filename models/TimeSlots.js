@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const TimeSlotSchema = new mongoose.Schema({
   selectedSlot: {
@@ -15,4 +15,4 @@ const TimeSlotSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('TimeSlots', TimeSlotSchema)
+export default mongoose.model('TimeSlots', TimeSlotSchema)
