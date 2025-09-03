@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Links</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <% const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]; %>
+    <% const mainDate = new Date(`2025-${+datemonth || 01}-${+datenum || 01}`) %>
+
+
+
+    <main class='clearfix'>
+        <section class="calendarContainer">
+            <section class="calendarHeader">
+                <h1 class='calendarTitle'>WEEKLY SCHEDULE</h1>
+                <section class='monthDays'>
+                    <% const daysInMonth = new Date(2025, +datemonth+1, 0).getDate(); %>
+                    <ul>
+                        <% for(let i=1; i<=daysInMonth; i++){%> 
+                            <li class="<%= +datenum === i ? 'active' : ''  %>"><a href="?datenum=<%= i %>&datemonth=<%= datemonth %>"><%= i %></a></li>
+                        <%}%>
+                    </ul>
+                </section>
+            </section>
+            
+            <section class="calendarBody">
+                <section class='monthNames'>
+                    <ul>
+                        <% for(let i=0; i<12; i++){%>
+                            <% let date = new Date() %>
+                            <% date.setMonth(i) %>
+                            <li class="<%= +datemonth === i ? 'active' : ''  %>"><a href="?datenum=<%= datenum %>&datemonth=<%= date.getMonth() %>"><%= date.toLocaleString('en-US', { month: 'short' }) %></a></li>
+                        <%}%>
+                    </ul>
+                </section>
+
+                <section class="dateContainer">
+                    <% let date = mainDate %>
+                    <% for(let i=0; i<=4; i++){%>
+                        <section class='individualDateContainer'>
+                            <section class="weekDayContainer">
+                                <p><%= date.getDate() %></p>
+                                <p><%= days[date.getDay()] %></p>
+                                <% date.setDate(date.getDate() + 1) %>
+                            </section>
+                            <section class="weekTasksContainer">
+                                <p>8:00 am | Cindy Lou - Documentation</p>
+                                <p>9:00 am | Cindy Lou - Documentation</p>
+                                <p>10:00 am | Cindy Lou - Documentation</p>
+                                <p>11:00 am | Cindy Lou - Documentation</p>
+                                <p>1:00 pm | Cindy Lou - Documentation</p>
+                            </section>
+                        </section>
+                    <%}%>
+                    <section class='individualDateContainer'>
+                            <section class="weekDayContainer">
+                                <p><%= date.getDate() %></p>
+                                <p><%= days[date.getDay()] %></p>
+                                <% date.setDate(date.getDate() + 1) %>
+                            </section>
+                            <section class="weekDayContainer">
+                                <p>5</p>
+                                <p>Appointments</p>
+                            </section>
+                            <section class="weekTasksContainer">
+                                
+                                
+                            </section>
+                        </section>
+                </section>
+            </section>
+
+        </section>
+    </main>
+</body>
+</html>

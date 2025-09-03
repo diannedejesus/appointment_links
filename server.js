@@ -7,7 +7,7 @@ import loginRoutes from './routes/login.js'
 import signupRoutes from './routes/signup.js'
 import homeRoutes from './routes/home.js'
 import bookingRoutes from './routes/reservations.js'
-//const calendarRoutes = require('./routes/calendar')
+import calendarRoutes from './routes/calendar.js'
 
 import passport from 'passport' // auth middleware
 import session from 'express-session' // Keeps users session logged in and creates the cookie
@@ -45,7 +45,7 @@ app.use('/', homeRoutes)
 app.use('/setDates', bookingRoutes)
 app.use('/login', loginRoutes)
 app.use('/signup', signupRoutes)
-//app.use('/calendar', calendarRoutes)
+app.use('/calendar', calendarRoutes)
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Server is running on PORT: ${process.env.PORT} , you better catch it!`)

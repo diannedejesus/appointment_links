@@ -1,21 +1,12 @@
-const express = require('express')
+import express from 'express'
+import * as calendarController from '../controllers/calendarCont.js'
+import {ensureAuth, ensureGuest} from '../middleware/auth.js';
 const router = express.Router()
-const calendarController = require('../controllers/calendarCont')
-const {ensureAuth, ensureGuest} = require('../middleware/auth');
 
-router.post('/addDate', ensureAuth, calendarController.addDate)
+router.get('/', calendarController.getIndex)
 
-// router.get('/selectTimeSlot', bookingController.selectTimeSlots)
-// router.get('/selectTimeSlot/:id', bookingController.selectTimeSlots)
-
-// router.post('/createTimeSlot', ensureAuth, bookingController.createTimeSlot)
-
+//router.post('/addDate', ensureAuth, calendarController.addDate)
 // router.put('/assignTimeSlot', bookingController.assignTimeSlot)
-
-// router.put('/markComplete', bookingController.markComplete)
-
-// router.put('/markIncomplete', bookingController.markIncomplete)
-
 // router.delete('/deleteDates', bookingController.deleteDates)
 
-module.exports = router
+export default router
