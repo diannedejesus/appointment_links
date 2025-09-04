@@ -9,6 +9,8 @@
 </head>
 <body>
     <header>
+        <a href='/calendar' class='button'>calendar</a>
+        <a href='/setdates' class='button'>set dates</a>
         <a href='/signup/logout' class='signout'>signout</a>
         <a href='/login/configure' class='button'>configure</a>
     </header>
@@ -39,8 +41,23 @@
                             <label for="timeItem">Time</label>
                         </div>
                         <input type="date" placeholder="Enter a Date" id='dateItem' name='dateItem'>
-                        <input type="time" placeholder="Enter a Time" id='timeItem' name='timeItem'>
-
+                        
+                        <select id='hourItem' name='hourItem'>
+                            <option value="">--hour--</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        <select id='minuteItem' name='minuteItem'>
+                            <option value="">--minute--</option>
+                            <option value="30">30</option>
+                            <option value="00">00</option>
+                        </select>
+                        
                         <input type="button" class='addDate' value='Add'>
 
                         <ul id='timeSlots'><li>Dates:</li></ul>
@@ -56,26 +73,29 @@
             <table>
                 <tr>
                     <th>name</th>
-                    <th>email</th>
-                    <th>location</th>
+                    <!-- <th>email</th> -->
+                    <!-- <th>location</th> -->
                     <th>subject</th>
                     <th>duration</th>
-                    <th>linkId</th>
+                    <th>link</th>
                     <th>status</th>
-                    <th>action</th>
+                    <th>Resend</th>
+                    <th>Remove</th>
                 </tr>
                 <% reservations.forEach( (el) => { %>
                 <tr>
                     <td><%= el.name %></td>
-                    <td><%= el.email %></td>
-                    <td><%= el.location %></td>
+                    <!-- <td><%= el.email %></td> -->
+                    <!-- <td><%= el.location %></td> -->
                     <td><%= el.subject %></td>
                     <td><% if(el.duration <= 60){ %>
                         <%= el.duration %> min
                     <% }else{ %>
                        <%= el.duration/60 %> hours
                     <% } %>
-                    <td><a href='../setDates/selectTimeSlot/<%= el.linkId %>'><%= el.linkId %></a></td>
+                    <td>
+                        <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
+                    </td>
                     <td><% timeSlots.forEach( (ele) => { %>
                         <% if (ele.linkId === el.linkId) { %> 
                             <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
@@ -83,6 +103,7 @@
                     <% }) %>
                     </td>
                     <td data-id='<%= el.linkId %>'><a class='sendMail'>Send Email</a></td>
+                    <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
                 </tr>
                 <% }) %>
             </table>

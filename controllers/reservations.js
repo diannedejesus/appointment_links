@@ -157,11 +157,10 @@ export async function assignTimeSlot (req, res){ //uses ews
 export async function deleteDates (req, res){
     console.log(req.body.todoIdFromJSFile)
     try{
-        await TimeSlotDB.findOneAndDelete({_id:req.body.todoIdFromJSFile})
+        await TimeSlotDB.findOneAndDelete({linkId:req.body.todoIdFromJSFile})
         console.log('Deleted Todo')
         res.json('Deleted It')
     }catch(err){
         console.log(err)
     }
 }
-   

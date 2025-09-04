@@ -97,14 +97,6 @@ section.weekDayContainer p + p {
 /* ----------------------------------------------------------------- */
 /* ----------------------------------------------------------------- */
 
-h1 {
-  color: black;
-  background-color: lightcoral;
-  height: 2em;
-  line-height: 2em;
-  padding-left: 0.5em;
-  margin: 0;
-}
 .completed {
   text-decoration: line-through;
   color: gray;
@@ -195,7 +187,6 @@ select {
 
 .dayContainer {
   display: inline-block;
-  width: 20%;
   margin: 0.4em;
 }
 

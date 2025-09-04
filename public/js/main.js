@@ -1,10 +1,11 @@
-const deleteBtn = document.querySelectorAll('.del')
+const deleteButton = document.querySelectorAll('.del')
 const signoutBtn = document.querySelector('.signout')
 const addDateBtn = document.querySelector('.addDate')
 const selectedSlot = document.querySelectorAll('.selectSlot')
 const sendMail = document.querySelectorAll('.sendMail')
 
 if(addDateBtn){addDateBtn.addEventListener('click', addTimeSlot)}
+if(deleteButton){deleteButton.addEventListener('click', deleteReservation)}
 if(signoutBtn){signoutBtn.addEventListener('click', signout)}
 
 Array.from(selectedSlot).forEach((el)=>{
@@ -15,11 +16,11 @@ Array.from(sendMail).forEach((el)=>{
     el.addEventListener('click', resendEmail)
 })
 
-Array.from(deleteBtn).forEach((el)=>{
-    el.addEventListener('click', deleteTodo)
+Array.from(deleteButton).forEach((el)=>{
+    el.addEventListener('click', deleteReservation)
 })
 
-async function deleteTodo(){
+async function deleteReservation(){
     const todoId = this.parentNode.dataset.id
     try{
         const response = await fetch('../setDates/deleteDates', {
@@ -50,8 +51,11 @@ async function signout(){
 }
 
 function addTimeSlot(){
+    const hourInput = document.querySelector("[name='hourItem']")
+    const minuteInput = document.querySelector("[name='minuteItem']")
+    const selectedHour = hourInput.options[hourInput.selectedIndex].value
+    const selectedMinute = minuteInput.options[minuteInput.selectedIndex].value
     const selectedDate = document.querySelector("[name='dateItem']").value
-    const selectedTime = document.querySelector("[name='timeItem']").value
     const dateList = document.querySelector('#timeSlots')
 
     if(selectedDate !== '' || selectedTime !== '' ){
@@ -59,8 +63,8 @@ function addTimeSlot(){
         let newFormItem = document. createElement("input")
         newFormItem.type = 'hidden'
         newFormItem.name = 'dateTimeItem'
-        newFormItem.value = `${selectedDate} ${selectedTime}`
-        newItem.appendChild(document.createTextNode(`${selectedDate} ${selectedTime}`))
+        newFormItem.value = `${selectedDate} ${selectedHour}:${selectedMinute}`
+        newItem.appendChild(document.createTextNode(`${selectedDate} ${selectedHour}:${selectedMinute}`))
         this.parentNode.appendChild(newFormItem)
         dateList.appendChild(newItem)
     }
@@ -106,3 +110,22 @@ async function resendEmail(){
         console.log(error)
     }
 }
+
+// async function deleteReservation(){
+//     const item1 = this.parentNode.dataset.id;
+// console.log(item1)
+//     try {
+//         const response = await fetch('', {
+//             method: 'delete',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify({
+//                 'item1': item1
+//             })
+//         })
+//         const data = await response.json()
+//         console.log(data)
+//         location.reload()
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
