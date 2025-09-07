@@ -33,8 +33,8 @@ async function deleteReservation(){
         const data = await response.json()
         console.log(data)
         location.reload()
-    }catch(err){
-        console.log(err)
+    }catch(error){
+        console.log(error)
     }
 }
 
@@ -59,13 +59,12 @@ function addTimeSlot(){
     const dateList = document.querySelector('#timeSlots')
 
     if(selectedDate !== '' || selectedTime !== '' ){
-        let newItem = document. createElement("li")
-        let newFormItem = document. createElement("input")
-        newFormItem.type = 'hidden'
+        let newItem = document.createElement("li")
+        let newFormItem = document.createElement("input")
+        newFormItem.type="datetime-local"
         newFormItem.name = 'dateTimeItem'
-        newFormItem.value = `${selectedDate} ${selectedHour}:${selectedMinute}`
-        newItem.appendChild(document.createTextNode(`${selectedDate} ${selectedHour}:${selectedMinute}`))
-        this.parentNode.appendChild(newFormItem)
+        newFormItem.value = `${selectedDate}T${selectedHour}:${selectedMinute}`
+        newItem.appendChild(newFormItem)
         dateList.appendChild(newItem)
     }
 }

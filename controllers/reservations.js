@@ -10,22 +10,23 @@ export async function show_setDates (req,res){
         const slots = await TimeSlotDB.find()
         const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
-        //TODO: the items needs to be sorted by date
+        
         res.render('setDates.ejs', {timeSlots: slots, left: itemsLeft, reservations: reservationsMade})
-    }catch(err){
-        console.log(err)
+    }catch(error){
+        console.log(error)
     }
 }
 
-export async function selectTimeSlots (req,res) {
+export async function selectTimeSlots (req,res) {  
     try{
         let availableSlots
         let unavailableSlots = []
-
         let currentLink = {}
+
         if(req.params.id){
             currentLink = {linkId: req.params.id}
         }
+        //else return error
 
         const reservation = await ReservedSlotDB.find(currentLink)
         const timeSlots = await TimeSlotDB.find(currentLink)
@@ -36,8 +37,10 @@ export async function selectTimeSlots (req,res) {
         if(isFilled){
             availableSlots = timeSlots[0].selectedSlot
         }else{
-            availableSlots = timeSlots[0].slotChoices  
+            availableSlots = timeSlots[0].slotChoices 
         }
+
+        availableSlots = availableSlots.sort()
 
         for(let slots of reservedSlots){
             if(slots.selectedSlot){
@@ -45,7 +48,6 @@ export async function selectTimeSlots (req,res) {
             }
         }
         
-        //TODO: the items needs to be sorted by date
         res.render('selectTimeSlot.ejs', {todos: reservation, isFilled: isFilled, timeSlots: availableSlots, reserved: unavailableSlots})
     }catch(err){
         console.log(err)
