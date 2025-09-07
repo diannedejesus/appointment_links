@@ -6,8 +6,47 @@ import crypto from "crypto";
 //const NTLMAuth = require('httpntlm').ntlm;
 
 
-export function getIndex (req,res){
-    res.render('calendarIndex.ejs', {datenum: req.query.datenum, datemonth: req.query.datemonth}) 
+export async function getIndex (req,res){
+    const slots = await TimeSlotDB.find()
+    const reservationList = []
+
+    for(let timeslots of slots){
+        const reservationInfo = await userInfoDB.findOne({linkId: timeslots.linkId})
+        let reservation
+
+        if(timeslots.selectTimeSlot){
+            let date = new Date(timeslots.selectedSlot)
+
+            reservation = {
+                date,
+                person: reservationInfo.name,
+                subject: reservationInfo.subject,
+                reserved: true
+            }
+
+            reservationList.push(reservation)
+        }else{
+            for(let dates of timeslots.slotChoices){
+                let date = new Date(dates)
+
+                reservation = {
+                    date,
+                    person: reservationInfo.name,
+                    subject: reservationInfo.subject,
+                    reserved: false
+                }
+
+                reservationList.push(reservation)
+            }
+        }
+       
+    }
+
+    res.render('calendarIndex.ejs', {
+        datenum: req.query.datenum, 
+        datemonth: req.query.datemonth,
+        reservationList: reservationList
+    }) 
 }
 
 // export async function addDate(req,res){

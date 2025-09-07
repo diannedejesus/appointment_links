@@ -1,10 +1,11 @@
 import TimeSlotDB from '../models/TimeSlots.js'
 import ReservedSlotDB from '../models/Reservations.js'
+import DatesDB from '../models/Dates.js'
 //const ewsOptions = require('../ewsConnections')
 import * as nanoid from 'nanoid'
 
 
-export async function setDates (req,res){
+export async function show_setDates (req,res){
     try{
         const slots = await TimeSlotDB.find()
         const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
@@ -91,16 +92,46 @@ export async function createTimeSlot (req, res){
             duration: duration,
             linkId: linkId,
         })
+
         console.log(req.body.dateTimeItem)  //validate
+
         await TimeSlotDB.create({
             slotChoices: req.body.dateTimeItem,
             linkId: linkId,
         })
 
+        if(!Array.isArray(req.body.dateTimeItem)){
+            const createdDate = await DatesDB.findOne({ dateTime: req.body.dateTimeItem })
+
+            if(createdDate){
+                await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
+            }else{
+                await DatesDB.create({
+                    dateTime: req.body.dateTimeItem,
+                    references: [linkId],
+                    reserved: false
+                })
+            }
+        }else{
+            for(let dateTime of req.body.dateTimeItem){
+                const createdDate = await DatesDB.findOne({ dateTime: dateTime })
+
+                if(createdDate){
+                    await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
+                }else{
+                    await DatesDB.create({
+                        dateTime: dateTime,
+                        references: [linkId],
+                        reserved: false
+                    })
+                }
+            }
+        }
+        
         req.body.idFromJSFile = linkId
         //resendEmail(req)
 
-        console.log('Todo has been added!')
+        console.log('Time slots were created')
         res.redirect('/setDates')
     }catch(err){
         console.log(err)
@@ -154,13 +185,31 @@ export async function assignTimeSlot (req, res){ //uses ews
     }
 }
 
-export async function deleteDates (req, res){
-    console.log(req.body.todoIdFromJSFile)
+export async function deleteTimeSlot (req, res){
+    //console.log(req.body.todoIdFromJSFile)
+
     try{
+        const timeSlot = await TimeSlotDB.findOne({linkId:req.body.todoIdFromJSFile})
+
+        for(let currentDateTime of timeSlot.slotChoices){
+            await DatesDB.updateOne(
+                {dateTime: currentDateTime}, 
+                {$pull: {references: req.body.todoIdFromJSFile}}
+            )
+
+            const verifyItem = await DatesDB.findOne({dateTime: currentDateTime})
+
+            if(verifyItem.references.length === 0){
+                await DatesDB.findOneAndDelete({dateTime: currentDateTime})
+            }
+        }
+        
         await TimeSlotDB.findOneAndDelete({linkId:req.body.todoIdFromJSFile})
-        console.log('Deleted Todo')
-        res.json('Deleted It')
-    }catch(err){
-        console.log(err)
+        await ReservedSlotDB.findOneAndDelete({linkId:req.body.todoIdFromJSFile})
+        
+        console.log('Deleted Reservations')
+        res.json('Deleted Reservations')
+    }catch(error){
+        console.log(error)
     }
 }

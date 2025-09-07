@@ -5,7 +5,7 @@ const selectedSlot = document.querySelectorAll('.selectSlot')
 const sendMail = document.querySelectorAll('.sendMail')
 
 if(addDateBtn){addDateBtn.addEventListener('click', addTimeSlot)}
-if(deleteButton){deleteButton.addEventListener('click', deleteReservation)}
+//if(deleteButton){deleteButton.addEventListener('click', deleteReservation)}
 if(signoutBtn){signoutBtn.addEventListener('click', signout)}
 
 Array.from(selectedSlot).forEach((el)=>{

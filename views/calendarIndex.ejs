@@ -54,28 +54,28 @@
                                 <% date.setDate(date.getDate() + 1) %>
                             </section>
                             <section class="weekTasksContainer">
-                                <p>8:00 am | Cindy Lou - Documentation</p>
-                                <p>9:00 am | Cindy Lou - Documentation</p>
-                                <p>10:00 am | Cindy Lou - Documentation</p>
-
+                                <% let obj = reservationList.find(o => `${o.date.getFullYear()}-${o.date.getMonth()}-${o.date.getDate()}` === `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`) %>
+                                <% if(obj){%>
+                                    <p <%= obj.reserved ? 'class=reserved' : 'class=unreserved'%>> <%= obj.date.toLocaleTimeString()  %> | <%= obj.person  %> - <%= obj.subject  %> </p>
+                                <% } %>
                             </section>
                         </section>
                     <%}%>
                     <section class='individualDateContainer'>
-                            <section class="weekDayContainer">
-                                <p><%= date.getDate() %></p>
-                                <p><%= days[date.getDay()] %></p>
-                                <% date.setDate(date.getDate() + 1) %>
-                            </section>
-                            <section class="weekDayContainer">
-                                <p>5</p>
-                                <p>Appointments</p>
-                            </section>
-                            <section class="weekTasksContainer">
-                                
-                                
-                            </section>
+                        <section class="weekDayContainer">
+                            <p><%= date.getDate() %></p>
+                            <p><%= days[date.getDay()] %></p>
+                            <% date.setDate(date.getDate() + 1) %>
                         </section>
+                        <section class="weekDayContainer">
+                            <p>5</p>
+                            <p>Appointments</p>
+                        </section>
+                        <section class="weekTasksContainer">
+                            
+                            
+                        </section>
+                    </section>
                 </section>
             </section>
 
