@@ -50,22 +50,35 @@ async function signout(){
     }
 }
 
+let orderedDatelist = []
 function addTimeSlot(){
+    const selectedDate = document.querySelector("[name='dateItem']").value
     const hourInput = document.querySelector("[name='hourItem']")
     const minuteInput = document.querySelector("[name='minuteItem']")
+    const dateList = document.querySelector('#timeSlots') 
+
     const selectedHour = hourInput.options[hourInput.selectedIndex].value
     const selectedMinute = minuteInput.options[minuteInput.selectedIndex].value
-    const selectedDate = document.querySelector("[name='dateItem']").value
-    const dateList = document.querySelector('#timeSlots')
 
-    if(selectedDate !== '' || selectedTime !== '' ){
+    if(selectedDate !== '' && selectedHour !== '' && selectedMinute !== ''){        
+        orderedDatelist.push(`${selectedDate}T${selectedHour}:${selectedMinute}`)
+        buildDateList(dateList, orderedDatelist.sort())
+    }
+}
+
+function buildDateList(listContainer, datesArray){
+    listContainer.innerHTML = ""
+
+    for(let dates of datesArray){
         let newItem = document.createElement("li")
         let newFormItem = document.createElement("input")
+        
         newFormItem.type="datetime-local"
         newFormItem.name = 'dateTimeItem'
-        newFormItem.value = `${selectedDate}T${selectedHour}:${selectedMinute}`
+        newFormItem.value = `${dates}`
+        
         newItem.appendChild(newFormItem)
-        dateList.appendChild(newItem)
+        listContainer.appendChild(newItem)
     }
 }
 
