@@ -7,26 +7,40 @@ export default function(passport) {
   passport.use(new lstrat({
     usernameField: 'email' //set up usernameField to be email field in inputs
   }, async (email, password, done) => {
-      User.findOne({email: email.toLowerCase()}, async (err, user) => {
-        if(err) {return done(err);} //return callback with error only
+    try {
+      const savedUser = await User.findOne({ email: email.toLowerCase()})
+
+      if(savedUser){
+        if(await bcrypt.compare(password, savedUser.password)){
+          return done(null, savedUser)
+        }else{
+          return done(null, false, {msg: 'invalid password'})
+        }
+      }
+    } catch (error) {
+      
+    }
+      // User.findOne({email: email.toLowerCase()}, async (err, user) => {
+      //   if(err) {return done(err);} //return callback with error only
        
-        if(!user) {
-          return done(null, false, {msg: 'user does not exist'});
-          //return callback with null error, !user, and error message
-        }
+      //   if(!user) {
+      //     return done(null, false, {msg: 'user does not exist'});
+      //     //return callback with null error, !user, and error message
+      //   }
 
-        try {
-          if(await bcrypt.compare(password, user.password)) {
-            return done(null, user);
-          }
-          else {
-            return done(null, false, {msg: 'invalid password'})
-          }
+      //   try {
+      //     if(await bcrypt.compare(password, user.password)) {
+      //       return done(null, user);
+      //     }
+      //     else {
+      //       return done(null, false, {msg: 'invalid password'})
+      //     }
 
-        } catch(error) {
-          return done(error), false;
-        }
-      })
+      //   } catch(error) {
+      //     return done(error), false;
+      //   }
+      // })
+
     }
   ))
 

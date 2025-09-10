@@ -15,33 +15,43 @@
         <a href='/login/configure' class='button'>configure</a>
     </header>
    
-    <main>
+    <main class="setDateContainer">
         <h1>Set Available Dates</h1>
         <section>
             <form action="/setDates/createTimeSlot" method='POST'>
                 <fieldset>
-                    <label for='nameItem'>Name of Client</label> <label for='emailItem'>Client Email</label>
-                    <input type="text" placeholder="Name" id='nameItem' name='nameItem'>
-                    <input type="text" placeholder="Email" id='emailItem' name='emailItem'>
-
-                    <label for='subjectItem'>Topic of appointment</label> <label for='locationItem'>Location of appointment</label>
-                    <input type="text" placeholder="Subject" id='subjectItem' name='subjectItem'> <input type="text" placeholder="Location" id='locationItem' name='locationItem'>
+                    <fieldset>
+                        <label for='nameItem'>Name of Client</label>
+                        <input type="text" placeholder="Name" id='nameItem' name='nameItem'>
                     
-                    <label for='durationItem'>Duration of appointment</label>
-                    <input type="text" placeholder="duration" id='durationItem' name='durationItem'>
+                        <label for='emailItem'>Client Email</label>
+                        <input type="text" placeholder="Email" id='emailItem' name='emailItem'>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <label for='subjectItem'>Topic of appointment</label>
+                        <input type="text" placeholder="Subject" id='subjectItem' name='subjectItem'> 
+                    
+                        <label for='locationItem'>Location of appointment</label>
+                        <input type="text" placeholder="Location" id='locationItem' name='locationItem'>
+                    
+                        <label for='durationItem'>Duration of appointment</label>
+                        <input type="text" placeholder="duration" id='durationItem' name='durationItem'>
+                    </fieldset>
+                    
+                    
                     <select name='timeframeItem'>
                         <option value='minutes'>minutes</option>
                         <option value='hours'>hours</option>
                     </select>
 
                     <fieldset id='appointmentDates'>
-                        <legend for='appointmentDates'>Available dates/time for appointment</legend>
-                        <div>
-                            <label for='dateItem'>Date</label>
-                            <label for="timeItem">Time</label>
-                        </div>
+                        <legend for='appointmentDates'>Select dates/time for appointment</legend>
+
+                        <label for='dateItem'>Date</label>
                         <input type="date" placeholder="Enter a Date" id='dateItem' name='dateItem'>
-                        
+
+                        <label for="timeItem">Time</label>
                         <select id='hourItem' name='hourItem'>
                             <option value="">--hour--</option>
                             <option value="08">8</option>
@@ -59,8 +69,9 @@
                         </select>
                         
                         <input type="button" class='addDate' value='Add'>
-
-                        <ul id='timeSlots'><li>Dates:</li></ul>
+                        
+                        <h2>Selected Appointment Dates</h2>
+                        <ul id='timeSlots'></ul>
                     </fieldset>
                 
                     <input type="submit">
