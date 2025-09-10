@@ -16,33 +16,15 @@ export default function(passport) {
         }else{
           return done(null, false, {msg: 'invalid password'})
         }
+      }else{
+        return done(null, false, {msg: 'user does not exist'})
       }
+
     } catch (error) {
-      
+      return done(error), false;
     }
-      // User.findOne({email: email.toLowerCase()}, async (err, user) => {
-      //   if(err) {return done(err);} //return callback with error only
-       
-      //   if(!user) {
-      //     return done(null, false, {msg: 'user does not exist'});
-      //     //return callback with null error, !user, and error message
-      //   }
 
-      //   try {
-      //     if(await bcrypt.compare(password, user.password)) {
-      //       return done(null, user);
-      //     }
-      //     else {
-      //       return done(null, false, {msg: 'invalid password'})
-      //     }
-
-      //   } catch(error) {
-      //     return done(error), false;
-      //   }
-      // })
-
-    }
-  ))
+  }))
 
   passport.serializeUser((user, done) => {
     done(null, user.id)
