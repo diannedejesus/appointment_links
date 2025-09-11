@@ -19,34 +19,35 @@
         <h1>Set Available Dates</h1>
         <section>
             <form action="/setDates/createTimeSlot" method='POST'>
-                <fieldset>
-                    <fieldset>
+                <fieldset id="">
+                    <div class="subFields">
+                        <h3>Client Information</h3>
                         <label for='nameItem'>Name of Client</label>
                         <input type="text" placeholder="Name" id='nameItem' name='nameItem'>
                     
                         <label for='emailItem'>Client Email</label>
                         <input type="text" placeholder="Email" id='emailItem' name='emailItem'>
-                    </fieldset>
+                    </div>
                     
-                    <fieldset>
+                    <div class="subFields">
+                        <h3 for='appointmentDates'>Appointment Information</h3>
                         <label for='subjectItem'>Topic of appointment</label>
-                        <input type="text" placeholder="Subject" id='subjectItem' name='subjectItem'> 
+                        <input type="text" class="longTextInput" placeholder="Subject" id='subjectItem' name='subjectItem'> 
                     
                         <label for='locationItem'>Location of appointment</label>
-                        <input type="text" placeholder="Location" id='locationItem' name='locationItem'>
+                        <input type="text" class="longTextInput" placeholder="Location" id='locationItem' name='locationItem'>
                     
-                        <label for='durationItem'>Duration of appointment</label>
-                        <input type="text" placeholder="duration" id='durationItem' name='durationItem'>
-                    </fieldset>
+                        <label for='durationItem'>Duration</label>
+                        <input type="text" class="shortTextInput" placeholder="duration" id='durationItem' name='durationItem'>
                     
+                        <select name='timeframeItem'>
+                            <option value='minutes'>minutes</option>
+                            <option value='hours'>hours</option>
+                        </select>
+                    </div>
                     
-                    <select name='timeframeItem'>
-                        <option value='minutes'>minutes</option>
-                        <option value='hours'>hours</option>
-                    </select>
-
-                    <fieldset id='appointmentDates'>
-                        <legend for='appointmentDates'>Select dates/time for appointment</legend>
+                    <div id='appointmentDates' class="subFields">
+                        <h3 for='appointmentDates'>Select Dates and Time </h3>
 
                         <label for='dateItem'>Date</label>
                         <input type="date" placeholder="Enter a Date" id='dateItem' name='dateItem'>
@@ -70,9 +71,9 @@
                         
                         <input type="button" class='addDate' value='Add'>
                         
-                        <h2>Selected Appointment Dates</h2>
+                        <h2>Appointment Dates</h2>
                         <ul id='timeSlots'></ul>
-                    </fieldset>
+                    </div>
                 
                     <input type="submit">
                 </fieldset>
@@ -83,13 +84,13 @@
             <h3>Unreserved Dates: <%= left %></h3>
             <table>
                 <tr>
-                    <th>name</th>
+                    <th>Name</th>
                     <!-- <th>email</th> -->
                     <!-- <th>location</th> -->
-                    <th>subject</th>
-                    <th>duration</th>
-                    <th>link</th>
-                    <th>status</th>
+                    <th>Subject</th>
+                    <th>Duration</th>
+                    <th>Link</th>
+                    <th>Status</th>
                     <th>Resend</th>
                     <th>Remove</th>
                 </tr>
