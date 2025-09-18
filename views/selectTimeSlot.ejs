@@ -8,74 +8,106 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <header>
+    <nav>
         <a href='/calendar' class='button'>calendar</a>
         <a href='/setdates' class='button'>set dates</a>
         <a href='/signup/logout' class='signout'>signout</a>
         <a href='/login/configure' class='button'>configure</a>
-    </header>
+    </nav>
     
-    <h1>Book a Date</h1>
-    <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
-    <% if (isFilled) { %>
-        <h2>Selected Date/Time: <%= new Date(timeSlots).toLocaleString('es-ES', {dateStyle: 'full', timeStyle: 'short', hour12: true}) %></h2>
-    <% } %>
-    
-    <h2>Appointment Information</h2>
-    <p id='name'><strong>Name:</strong> <%= todos[0].name %></p>
-    <p><strong>Email:</strong> <%= todos[0].email %></p>
-    <p><strong>Duration:</strong> <%= todos[0].duration %></p>
-    <p><strong>Subject Matter:</strong> <%= todos[0].subject %></p>
-    <br>
+    <main>
+        <% if (isFilled) { %>
+            <% const currentTimeSlot = new Date(timeSlots) %>
+            <section class="header">
+                <h1>Cita <br /> Programado</h1>
+                <h2>para <%= reservationInfo[0].name %></h2>
+            </section>
+            <section class="body">
+                <p class="topic">Tema: <%= reservationInfo[0].subject %> (con Tecnico Programa)</p>
+                
+                <section class="cardAppointment">
+                    <div class="date">
+                        <p class="dull"><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %></p>
+                        <p class="emphasis"><%= currentTimeSlot.toLocaleString('es-US', { day: 'numeric'}) %></p>
+                        <p class="dull"><%= currentTimeSlot.toLocaleString('es-US', { month: 'short'}) %></p>
+                    </div>
+                    
+                    <div class="time">
+                        <div>
+                            <span class="emphasis"><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric'}) %>:</span><span><%= currentTimeSlot.toLocaleString('es-ES', {minute: 'numeric', hour12: true}) %></span><span class="dull"><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></span>
+                        </div>
+                        <p>HASTA: <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p>
+                    </div>
+                </section>
 
-<!-- CAncel rest -->
-<h2>Available Dates</h2>
-<% if (!isFilled) { %>
-    <section class='monthContainer'>
-        <h3><%= new Date(timeSlots[0]).toLocaleString('es-ES', { month: 'long'}) %> <%= new Date(timeSlots[0]).toLocaleString('es-ES', { year: 'numeric'}) %></h3>
-        <section class='dayContainer'>
-            <h3><%= new Date(timeSlots[0]).toLocaleString('es-US', { weekday: 'long', day: 'numeric'}) %></h3>
+                <p>Gracias, su cita ha sido programado con exito.</p>
+
+                <button>Cambiar o cancelar cita</button>
+            </section>
+        <% } else { %>
+            <h1>Book a Date</h1>
+
+            <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
             
-<% timeSlots.forEach( (el,i) => { %>
-    <% if (i-1 >= 0 && new Date(el).getMonth() !== new Date(timeSlots[i-1]).getMonth()) { %>
-                <!-- Close month and open new month -->
-        </section>
-    </section>
-    <section class='monthContainer'>
-        <h2><%= new Date(el).toLocaleString('es-US', { year: 'numeric', month: 'short'}) %></h2>
-        <section class='dayContainer'>
-            <h3><%= new Date(el).toLocaleString('es-US', { weekday: 'long', day: 'numeric'}) %> </h3>
-            <section class="timeSlots" data-dateTime='<%=el%>' data-name='<%= todos[0].name %>' data-id='<%= todos[0].linkId %>'>
-                <div class="time"><%= new Date(el).toLocaleString('es-US', { hour: '2-digit', minute: '2-digit'}) %></div>
-                <div class="availability"><%= reserved.includes(`${new Date(el)}`) ? 'filled' : 'available' %></div>
-                <button <%= reserved.includes(`${new Date(el)}`) ? 'disabled' : '' %> class='selectSlot'>Select</button>
-            </section>
-    <% } else{ %>
-     <!-- not a new month -->  
-     <%= %>
-        <% if (i-1 >= 0 && new Date(el).getDay() !== new Date(timeSlots[i-1]).getDay()) { %>
-        <!-- if a different day close day and open new one -->
-        </section>
-        <section class='dayContainer'> 
-            <h3><%= new Date(el).toLocaleString('es-US', { weekday: 'long', day: 'numeric'}) %> </h3>
-            <section class="timeSlots" data-dateTime='<%=el%>' data-name='<%= todos[0].name %>' data-id='<%= todos[0].linkId %>'>
-                <div class="time"><%= new Date(el).toLocaleString('es-US', { hour: '2-digit', minute: '2-digit'}) %></div>
-                <div class="availability"><%= reserved.includes(`${new Date(el)}`) ? 'filled' : 'available' %></div>
-                <button <%= reserved.includes(`${new Date(el)}`) ? 'disabled' : '' %> class='selectSlot'>Select</button>
-            </section>
-        <% } else{ %> 
-        <!-- if not a different day add timeslot -->   
-            <section class="timeSlots" data-dateTime='<%=el%>' data-name='<%= todos[0].name %>' data-id='<%= todos[0].linkId %>'>
-                <div class="time"><%= new Date(el).toLocaleString('es-US', { hour: '2-digit', minute: '2-digit'}) %></div>
-                <div class="availability"><%= reserved.includes(`${new Date(el)}`) ? 'filled' : 'available' %></div>
-                <button <%= reserved.includes(`${new Date(el)}`) ? 'disabled' : '' %> class='selectSlot'>Select</button>
-            </section>
-        <% } %>
-    <% } %>
-<% }) %>
+            <section class="dateSliderContainer">
+                <% const dateAdded = [] %>
+                <% const selectedDate = new Date(selectedDay ?? timeSlots[0])  %>
 
-    </section>
-    <% } %>
+                <h2><%= selectedDate.toLocaleString('es-US', { month: 'long'}) %></h2>
+                <ul id="dateSlider" class="dateSlider">
+                    <% timeSlots.forEach( (timeSlot,i) => { %>
+                        <% const currentDate = new Date(timeSlot) %>
+                        <% const weekNumber = currentDate.toLocaleString('es-US', { day: 'numeric'}) %>
+                        <% const weekDay= currentDate.toLocaleString('es-US', { weekday: 'short'}) %>
+                        <% if(!dateAdded.includes(weekNumber + ' ' + weekDay)){%>
+                            <% dateAdded.push(weekNumber + ' ' + weekDay) %>
+                            <% if(+currentDate === +selectedDate) { %> 
+                                <li class="selected">
+                                    <p><%= weekNumber %></p>
+                                    <p><%= weekDay %></p></a>
+                                </li>
+                            <% } else { %> 
+                                <li>
+                                    <a href="?selectedDate=<%= currentDate %>" class="reset-a">
+                                        <p><%= weekNumber %></p>
+                                        <p><%= weekDay %></p>
+                                    </a>
+                                </li>                            
+                            <% } %> 
+                        <%}%>
+                    <% }) %> 
+                </ul>
+            </section>
+
+            <section class="timesGrid">
+                <form action="../assignTimeSlot" method="POST">
+                    <fieldset>
+                        <% timeSlots.forEach( (timeSlot,i) => { %>
+                            <% const currentDate = new Date(timeSlot).toLocaleString('es-US', { day: 'numeric'},{ month: 'short'}) %>
+                            <% const selectedMonthDay = selectedDate.toLocaleString('es-US', { day: 'numeric'},{ month: 'short'}) %>
+
+                            <% if(+currentDate === +selectedMonthDay){%>
+                                <div class="timeslots">
+                                    <input type="radio" <%= reserved.includes(`${new Date(timeSlot)}`) ? 'disabled' : '' %> id="timeslot<%= i %>" name="timeslot" data-id='<%= reservationInfo[0].linkId %>' value="<%= new Date(timeSlot) %>" />
+                                    <label for="timeslot<%= i %>"><%= new Date(timeSlot).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %></label>
+                                </div>
+                            <% } %>
+                        <% }) %>
+                        <input type="hidden" id="linkId" name="timeslot" value="<%= reservationInfo[0].linkId %>" />
+                    </fieldset>
+                    <button>Select</button>
+                </form>
+            </section>
+
+            <h2>Appointment Information</h2>
+            <p id='name'><strong>Name:</strong> <%= reservationInfo[0].name %></p>
+            <p><strong>Email:</strong> <%= reservationInfo[0].email %></p>
+            <p><strong>Duration:</strong> <%= reservationInfo[0].duration %></p>
+            <p><strong>Subject Matter:</strong> <%= reservationInfo[0].subject %></p>
+            <br>
+        <% } %>
+   </main> 
+    
     <script src="../../js/main.js"></script>
 </body>
 </html>

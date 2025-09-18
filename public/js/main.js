@@ -87,21 +87,23 @@ async function selectTimeSlot(){
     const dateTime = this.parentNode.dataset.datetime
     const id = this.parentNode.dataset.id
 
-    try{
-        const response = await fetch('../../setDates/assignTimeSlot', {
-            method: 'PUT',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                'dateTimeFromJSFile': dateTime,
-                'idFromJSFile': id,
-            })
-        })
-        const data = await response.json()
-        console.log(data)
-        location.reload()
-    }catch(err){
-        console.log(err)
-    }
+    console.log(name)
+
+    // try{
+    //     const response = await fetch('../../setDates/assignTimeSlot', {
+    //         method: 'PUT',
+    //         headers: {'Content-type': 'application/json'},
+    //         body: JSON.stringify({
+    //             'dateTimeFromJSFile': dateTime,
+    //             'idFromJSFile': id,
+    //         })
+    //     })
+    //     const data = await response.json()
+    //     console.log(data)
+    //     location.reload()
+    // }catch(err){
+    //     console.log(err)
+    // }
 }
 
 async function resendEmail(){

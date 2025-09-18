@@ -1,8 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,500,600,700&display=swap");
+
 /* Box Model Hack */
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: "Lato", sans-serif;
 }
 
 /* Clear fix hack */
@@ -22,7 +25,7 @@
 /******************************************
 /* BASE STYLES
 /*******************************************/
-header {
+nav {
   padding: 1em;
 }
 
@@ -371,4 +374,163 @@ th {
 .signup a:hover {
   color: lightcoral;
   background-color: white;
+}
+
+/*-------------------------------------*/
+/*----------  Time Slots  -------------*/
+/*-------------------------------------*/
+
+.dateSliderContainer {
+  text-align: center;
+}
+.dateSliderContainer h2 {
+  margin-bottom: 10px;
+  margin-top: 2rem;
+  color: #808c9c;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.dateSlider {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+.dateSlider li p {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 2em;
+}
+.dateSlider li p + p {
+  color: #808c9c;
+  font-size: small;
+  margin-top: 1px;
+  margin-bottom: 1.5rem;
+}
+.dateSlider li.selected {
+  border-bottom: 8px solid coral;
+}
+.dateSlider {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.timesGrid fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.timeslots {
+  color: #808c9c;
+  width: fit-content;
+  padding: 0.9rem 1.2rem;
+  border-radius: 5px;
+  border: 2px solid #d9d9d9;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+.timeslots input[type="radio"] {
+  margin-right: 5px;
+  width: 1.4em;
+}
+.timeslots:has(> input[type="radio"]:checked) {
+  background-color: #0069d9;
+  color: white;
+  border: 2px solid transparent;
+}
+.timeslots:has(> input[type="radio"][disabled]) {
+  background-color: #e6e6e6;
+  border: 2px solid transparent;
+  text-decoration: line-through;
+}
+
+.reset-a,
+.reset-a:hover,
+.reset-a:visited,
+.reset-a:focus,
+.reset-a:active {
+  text-decoration: none;
+  color: inherit;
+  outline: 0;
+}
+
+/* ----------------------- */
+/* ----------------------- */
+main {
+  width: 50%;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  background-color: #fe4f5a;
+  padding: 0.5rem;
+}
+.header h1 {
+  line-height: 1.8rem;
+}
+.header h2 {
+  font-weight: normal;
+  color: white;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.body p.topic {
+  margin: 0;
+  padding: 1.2rem;
+  font-weight: bold;
+}
+
+.date {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem 2rem;
+  background-color: rgb(82, 82, 82);
+  color: white;
+  border-radius: 0 0 0 10px;
+}
+.date p {
+  margin: 0;
+}
+.date .emphasis {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+.date .dull {
+  color: rgb(199, 199, 199);
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2rem;
+  padding: 0.5rem 3rem;
+  background-color: #ebebeb;
+  border-radius: 0 0 10px 0;
+}
+.time .emphasis {
+  font-weight: 900;
+}
+.time .dull {
+  font-size: medium;
+}
+.time p {
+  font-size: small;
+  margin: 0;
+  color: #797979;
+}
+
+.cardAppointment {
+  display: flex;
+  justify-content: center;
 }

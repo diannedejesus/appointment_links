@@ -11,7 +11,11 @@ export async function show_setDates (req,res){
         const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
         
-        res.render('setDates.ejs', {timeSlots: slots, left: itemsLeft, reservations: reservationsMade})
+        res.render('setDates.ejs', {
+            timeSlots: slots,
+            left: itemsLeft,
+            reservations: reservationsMade
+        })
     }catch(error){
         console.log(error)
     }
@@ -19,7 +23,7 @@ export async function show_setDates (req,res){
 
 export async function selectTimeSlots (req,res) {  
     try{
-        let availableSlots
+        let availableSlots = []
         let unavailableSlots = []
         let currentLink = {}
 
@@ -35,7 +39,7 @@ export async function selectTimeSlots (req,res) {
         const isFilled = timeSlots[0].selectedSlot ? true : false
 
         if(isFilled){
-            availableSlots = timeSlots[0].selectedSlot
+            availableSlots.push(timeSlots[0].selectedSlot)
         }else{
             availableSlots = timeSlots[0].slotChoices 
         }
@@ -47,8 +51,14 @@ export async function selectTimeSlots (req,res) {
                 unavailableSlots.push(`${slots.selectedSlot}`)
             }
         }
-        
-        res.render('selectTimeSlot.ejs', {todos: reservation, isFilled: isFilled, timeSlots: availableSlots, reserved: unavailableSlots})
+
+        res.render('selectTimeSlot.ejs', {
+            reservationInfo: reservation,
+            isFilled: isFilled,
+            timeSlots: availableSlots,
+            reserved: unavailableSlots,
+            selectedDay: req.query.selectedDate
+        })
     }catch(err){
         console.log(err)
     }
@@ -142,19 +152,19 @@ export async function createTimeSlot (req, res){
 
 export async function assignTimeSlot (req, res){ //uses ews
     try{
-        await TimeSlotDB.findOneAndUpdate({linkId: req.body.idFromJSFile},{
-            selectedSlot: new Date(req.body.dateTimeFromJSFile),
+        await TimeSlotDB.findOneAndUpdate({linkId: req.body.timeslot[1]},{
+            selectedSlot: new Date(req.body.timeslot[0]),
         })
 
-        const reservationData = await ReservedSlotDB.findOne({linkId: req.body.idFromJSFile})
+        const reservationData = await ReservedSlotDB.findOne({linkId: req.body.timeslot[1]})
         let durationTime = reservationData.duration
-        const endDate = new Date(req.body.dateTimeFromJSFile).getTime() + (Number(durationTime) * 60000) //TODO use the duration but first set a standard for definition
+        const endDate = new Date(req.body.timeslot[0]).getTime() + (Number(durationTime) * 60000) //TODO use the duration but first set a standard for definition
 
         const options = {
             'Name': reservationData.name,
             'Subject': reservationData.subject,
             'Body': `${reservationData.name} ${reservationData.email}`,
-            'Start': new Date(req.body.dateTimeFromJSFile).toISOString(),
+            'Start': new Date(req.body.timeslot[0]).toISOString(),
             'End': new Date(endDate).toISOString(),
             'Location': reservationData.location,
             'Email': reservationData.email,
@@ -163,8 +173,8 @@ export async function assignTimeSlot (req, res){ //uses ews
         const optionsEmailUser = {
             'Name': reservationData.name,
             'Subject': 'An Appointment Date and Time has Been Reserved',
-            'Body': `Hello ${req.user.email},\n\n${options.Name} has selected the date ${new Date(req.body.dateTimeFromJSFile).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} ${new Date(options.Start).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} - ${new Date(endDate).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} for their appointment. \n\nThe apppointment will be at ${reservationData.location} and you will be discussing: ${reservationData.subject}.\n\n`, //Body: name email
-            'Start': new Date(req.body.dateTimeFromJSFile).toISOString(),
+            'Body': `Hello ${req.user.email},\n\n${options.Name} has selected the date ${new Date(req.body.timeslot[0]).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} ${new Date(options.Start).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} - ${new Date(endDate).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} for their appointment. \n\nThe apppointment will be at ${reservationData.location} and you will be discussing: ${reservationData.subject}.\n\n`, //Body: name email
+            'Start': new Date(req.body.timeslot[0]).toISOString(),
             'End': new Date(endDate).toISOString(),
             'Location': reservationData.location,
             'Email': req.user.calendarEmail,
@@ -172,7 +182,7 @@ export async function assignTimeSlot (req, res){ //uses ews
 
         const optionsEmailClient = {
             'Name': 'Your Appointment Date and Time has Been Reserved',
-            'Body': `Hello ${options.Name},\n\nYou have selected the date ${new Date(req.body.dateTimeFromJSFile).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} ${new Date(options.Start).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} - ${new Date(endDate).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} for your appointment. \n\nLike the selection page indicated the apppointment will be at ${reservationData.location}. \n\nWe will be discussing: ${reservationData.subject}.\n\n`, //Body: name email
+            'Body': `Hello ${options.Name},\n\nYou have selected the date ${new Date(req.body.timeslot[0]).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} ${new Date(options.Start).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} - ${new Date(endDate).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit'})} for your appointment. \n\nLike the selection page indicated the apppointment will be at ${reservationData.location}. \n\nWe will be discussing: ${reservationData.subject}.\n\n`, //Body: name email
             'Email': reservationData.email,
         }
         //save to calendar

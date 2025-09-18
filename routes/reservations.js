@@ -10,7 +10,7 @@ router.get('/selectTimeSlot/:id', bookingController.selectTimeSlots)
 router.post('/createTimeSlot', ensureAuth, bookingController.createTimeSlot)
 router.post('/resendEmail', ensureAuth, bookingController.resendEmail)
 
-router.put('/assignTimeSlot', bookingController.assignTimeSlot)
+router.post('/assignTimeSlot', bookingController.assignTimeSlot)
 
 router.delete('/deleteDates', bookingController.deleteTimeSlot)
 
