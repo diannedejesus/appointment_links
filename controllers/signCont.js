@@ -54,11 +54,14 @@ export async function postUser(req, res, next) {
 }
 
 export function logout(req, res) {
-  req.logout()
-
-  req.session.destroy((err) => {
-    if (err) console.log('Error : Failed to destroy the session during logout.', err)
-    req.user = null
+  req.logout(function(error) {
+    if(error) return next(error);
     res.redirect('/')
   })
+
+  // req.session.destroy((err) => {
+  //   if (err) console.log('Error : Failed to destroy the session during logout.', err)
+  //   req.user = null
+  //   res.redirect('/')
+  // })
 }
