@@ -12,20 +12,28 @@
     <main class='signin clearfix'>
 
         <section class='logon'>
-            <h1>Sign in to Appointment Links</h1> 
+            <h1>Bienvenido!</h1> 
 
             <form class="login-form" action="../login" method="POST">
-                <input type="text" name='email' placeholder="email">
-                <input type="text" name='password' placeholder="password">
-                <button>Forget your password?</button>
+                <div>
+                    <label>email</label>
+                    <input type="text" name='email' placeholder="email@provider.com">
+                </div>
+
+                <div>
+                    <label>password</label>
+                    <input type="text" name='password' placeholder="********">
+                    <a href="#" class="supplimentalLink">Forgot password?</a>
+                </div>
+
                 <input type="submit" value='Sign In'>
+                
+                <section class='signup'>
+                    <p>Don't have an account? <a href="/signup" class="supplimentalLink">Signup</a></p>
+                </section>
             </form>
         </section>
-        <section class='signup'>
-            <h1>Welcome, new visitor!</h1>
-            <p>create an account and get started managing appointments in your calendar.</p>
-            <a href="/signup">Signup</a>
-        </section>
+        
     </main>
 </body>
 </html>

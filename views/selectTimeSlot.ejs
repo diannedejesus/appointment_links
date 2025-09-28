@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Dates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
@@ -23,21 +24,12 @@
                 <h2>para <%= reservationInfo[0].name %></h2>
             </section>
             <section class="body">
+                <i class="fa-regular fa-calendar-check"></i>
                 <p class="topic">Tema: <%= reservationInfo[0].subject %> (con Tecnico Programa)</p>
-                
-                <section class="cardAppointment">
-                    <div class="date">
-                        <p class="dull"><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %></p>
-                        <p class="emphasis"><%= currentTimeSlot.toLocaleString('es-US', { day: 'numeric'}) %></p>
-                        <p class="dull"><%= currentTimeSlot.toLocaleString('es-US', { month: 'short'}) %></p>
-                    </div>
-                    
-                    <div class="time">
-                        <div>
-                            <span class="emphasis"><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric'}) %>:</span><span><%= currentTimeSlot.toLocaleString('es-ES', {minute: 'numeric', hour12: true}) %></span><span class="dull"><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></span>
-                        </div>
-                        <p>HASTA: <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p>
-                    </div>
+
+                <section class="dateContainer">
+                    <p><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>, <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %> de <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %> de <%= currentTimeSlot.toLocaleString('es-US', { year: "numeric" }) %></p>
+                    <p><%= currentTimeSlot.toLocaleString('es-US', { timeStyle: 'short' }) %> hasta <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p>
                 </section>
 
                 <p>Gracias, su cita ha sido programado con exito.</p>

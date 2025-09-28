@@ -324,56 +324,53 @@ th {
 
 .signin {
   margin: 1em auto;
-  width: 70%;
+  width: 50%;
 }
+
 .logon {
-  width: 60%;
-  border: 10px solid lightcoral;
-  border-radius: 10px 0 0 10px;
+  border: 5px solid rgb(219, 219, 219);
+  border-radius: 5px;
 }
-.signup {
-  width: 40%;
-  background-color: lightcoral;
-  border-radius: 0 10px 10px 0;
+
+.login-form {
+  padding: 2rem;
+}
+.login-form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.login-form div label {
+  padding-left: 0.8rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.login-form div .supplimentalLink {
+  text-align: right;
+  padding-right: 0.8rem;
 }
 
 .signin input {
   display: block;
-  margin: 2em auto;
-  height: 3em;
+  height: 2.5em;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 5px;
+  margin: 0.4rem;
 }
-
 .signin section {
   text-align: center;
 }
-
-.logon,
-.signup {
-  float: left;
-  margin: 0;
-  padding: 0;
-  height: 450px;
-}
-
 .signin h1 {
   background-color: transparent;
 }
-
-.signup a {
-  display: inline-block;
-  margin-top: 1em;
-  border: 2px solid white;
-  padding: 0.5em 4em;
-  border-radius: 20px;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bolder;
-  text-decoration: none;
+.signin input[type="submit"] {
+  width: 100%;
 }
 
-.signup a:hover {
-  color: lightcoral;
-  background-color: white;
+.supplimentalLink,
+.signup {
+  text-decoration: none;
+  font-size: 0.8rem;
 }
 
 /*-------------------------------------*/
@@ -459,8 +456,8 @@ th {
 /* ----------------------- */
 /* ----------------------- */
 main {
-  width: 50%;
-  border: 1px solid black;
+  min-width: 15%;
+  /* border: 1px solid black; */
   text-align: center;
 }
 
@@ -482,34 +479,40 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding: 2rem;
+}
+.body i {
+  font-size: 3rem;
 }
 .body p.topic {
   margin: 0;
   padding: 1.2rem;
   font-weight: bold;
 }
+.body button {
+  padding: 0.8rem 1.5rem;
+  background-color: #fe4f5a;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
 
-.date {
+/* .date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-transform: uppercase;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 2rem;
   padding: 0.5rem 2rem;
   background-color: rgb(82, 82, 82);
   color: white;
   border-radius: 0 0 0 10px;
-}
-.date p {
-  margin: 0;
-}
-.date .emphasis {
-  font-size: 2rem;
-  line-height: 2rem;
-}
-.date .dull {
-  color: rgb(199, 199, 199);
-}
+} */
 
-.time {
+/* .time {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -528,9 +531,16 @@ main {
   font-size: small;
   margin: 0;
   color: #797979;
-}
+} */
 
-.cardAppointment {
+/* .cardAppointment {
   display: flex;
   justify-content: center;
+} */
+
+.dateContainer {
+  font-size: larger;
+}
+.dateContainer p {
+  margin: 0;
 }
