@@ -2,7 +2,6 @@ import UserModel from '../models/UserInfo.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 
-
 export async function getPage(req, res) {
   res.render('signup', {msg: 'none'});
 }

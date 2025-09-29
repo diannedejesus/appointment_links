@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <header>
-        <a href='/calendar' class='button'>calendar</a>
-        <a href='/setdates' class='button'>set dates</a>
-        <a href='/signup/logout' class='signout'>signout</a>
-        <a href='/login/configure' class='button'>configure</a>
-    </header>
+    <nav>
+        <p>Reservando</p>
+        <ul>
+            <li><a href='/calendar' class='button'>calendario</a></li>
+            <li><a href='/setdates' class='button'>fijar fechas</a></li>
+            <li><a href='/signup/logout' class='signout'>salir</a></li>
+            <li><a href='/login/configure' class='button'>configurar</a></li>
+        </ul>
+    </nav>
    
     <main class="setDateContainer">
         <h1>Set Available Dates</h1>
@@ -21,40 +24,40 @@
             <form action="/setDates/createTimeSlot" method='POST'>
                 <fieldset id="">
                     <div class="subFields">
-                        <h3>Client Information</h3>
-                        <label for='nameItem'>Name of Client</label>
-                        <input type="text" placeholder="Name" id='nameItem' name='nameItem'>
+                        <h3>Información del Cliente</h3>
+                        <label for='nameItem'>Nombre</label>
+                        <input type="text" placeholder="Fulano de Pueblo" id='nameItem' name='nameItem'>
                     
-                        <label for='emailItem'>Client Email</label>
-                        <input type="text" placeholder="Email" id='emailItem' name='emailItem'>
+                        <label for='emailItem'>Correo Electronico</label>
+                        <input type="text" placeholder="correo@lugar.com" id='emailItem' name='emailItem'>
                     </div>
                     
                     <div class="subFields">
-                        <h3 for='appointmentDates'>Appointment Information</h3>
-                        <label for='subjectItem'>Topic of appointment</label>
-                        <input type="text" class="longTextInput" placeholder="Subject" id='subjectItem' name='subjectItem'> 
+                        <h3 for='appointmentDates'>Información de la Cita</h3>
+                        <label for='subjectItem'>Sujeto de la Cita</label>
+                        <input type="text" class="longTextInput" placeholder="Discusion de Caso" id='subjectItem' name='subjectItem'> 
                     
-                        <label for='locationItem'>Location of appointment</label>
-                        <input type="text" class="longTextInput" placeholder="Location" id='locationItem' name='locationItem'>
+                        <label for='locationItem'>Lugar de la Cita</label>
+                        <input type="text" class="longTextInput" placeholder="Salon de reunion primer piso" id='locationItem' name='locationItem'>
                     
-                        <label for='durationItem'>Duration</label>
-                        <input type="text" class="shortTextInput" placeholder="duration" id='durationItem' name='durationItem'>
+                        <label for='durationItem'>Duración</label>
+                        <input type="text" class="shortTextInput" placeholder="20" id='durationItem' name='durationItem'>
                     
                         <select name='timeframeItem'>
-                            <option value='minutes'>minutes</option>
-                            <option value='hours'>hours</option>
+                            <option value='minutes'>minuto</option>
+                            <option value='hours'>hora</option>
                         </select>
                     </div>
                     
                     <div id='appointmentDates' class="subFields">
-                        <h3 for='appointmentDates'>Select Dates and Time </h3>
+                        <h3 for='appointmentDates'>Selecione Hora y Día</h3>
 
-                        <label for='dateItem'>Date</label>
-                        <input type="date" placeholder="Enter a Date" id='dateItem' name='dateItem'>
+                        <label for='dateItem'>Fecha</label>
+                        <input type="date" id='dateItem' name='dateItem'>
 
-                        <label for="timeItem">Time</label>
+                        <label for="timeItem">Hora</label>
                         <select id='hourItem' name='hourItem'>
-                            <option value="">--hour--</option>
+                            <option value="">--hora--</option>
                             <option value="08">8</option>
                             <option value="09">9</option>
                             <option value="10">10</option>
@@ -64,14 +67,14 @@
                             <option value="15">3</option>
                         </select>
                         <select id='minuteItem' name='minuteItem'>
-                            <option value="">--minute--</option>
+                            <option value="">--minuto--</option>
                             <option value="30">30</option>
                             <option value="00">00</option>
                         </select>
                         
-                        <input type="button" class='addDate' value='Add'>
+                        <input type="button" class='addDate' value='Añadir'>
                         
-                        <h2>Appointment Dates</h2>
+                        <h2>Fechas para Citas</h2>
                         <ul id='timeSlots'></ul>
                     </div>
                 
