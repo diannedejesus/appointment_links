@@ -12,14 +12,14 @@
     <nav>
         <p>Reservando</p>
         <ul>
-            <li><a href='/calendar' class='button'>calendario</a></li>
-            <li><a href='/setdates' class='button'>fijar fechas</a></li>
+            <li><a href='/calendar'>calendario</a></li>
+            <li><a href='/setdates'>fijar fechas</a></li>
             <li><a href='/signup/logout' class='signout'>salir</a></li>
-            <li><a href='/login/configure' class='button'>configurar</a></li>
+            <li><a href='/login/configure'>configurar</a></li>
         </ul>
     </nav>
     
-    <main>
+    <main class="bookViewDate">
         <% if (isFilled) { %>
             <% const currentTimeSlot = new Date(timeSlots) %>
             <section class="header">
@@ -40,11 +40,16 @@
                 <button>Cambiar o cancelar cita</button>
             </section>
         <% } else { %>
-            <h1>Book a Date</h1>
-
-            <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
+            
+            <section class="bookHeaderContainer">
+                <h1>Book a Date</h1>
+                <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
+            </section>
+            
             
             <section class="dateSliderContainer">
+                
+
                 <% const dateAdded = [] %>
                 <% const selectedDate = new Date(selectedDay ?? timeSlots[0])  %>
 
@@ -90,16 +95,19 @@
                         <% }) %>
                         <input type="hidden" id="linkId" name="timeslot" value="<%= reservationInfo[0].linkId %>" />
                     </fieldset>
-                    <button>Select</button>
+                    <button class="button">Select</button>
                 </form>
             </section>
 
-            <h2>Appointment Information</h2>
-            <p id='name'><strong>Name:</strong> <%= reservationInfo[0].name %></p>
-            <p><strong>Email:</strong> <%= reservationInfo[0].email %></p>
-            <p><strong>Duration:</strong> <%= reservationInfo[0].duration %></p>
-            <p><strong>Subject Matter:</strong> <%= reservationInfo[0].subject %></p>
-            <br>
+            <section class="appointmentInformation">
+                <h2>Appointment Information</h2>
+                <p><strong>Name:</strong> <%= reservationInfo[0].name %></p>
+                <p><strong>Email:</strong> <%= reservationInfo[0].email %></p>
+                <p><strong>Duration:</strong> <%= reservationInfo[0].duration %></p>
+                <p><strong>Subject Matter:</strong> <%= reservationInfo[0].subject %></p>
+            </section>
+            
+            
         <% } %>
    </main> 
     

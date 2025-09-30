@@ -29,6 +29,12 @@ nav {
   padding: 1em;
 }
 
+.button {
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 0.5rem 1.5rem;
+}
+
 /******************************************
 /* BASE STYLES
 /*******************************************/
@@ -323,10 +329,15 @@ th {
   gap: 2.5rem;
 }
 
+.timesGrid {
+  padding: 0 2rem;
+}
+
 .timesGrid fieldset {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  border: 0;
 }
 
 .timeslots {
@@ -363,15 +374,32 @@ th {
   outline: 0;
 }
 
+.appointmentInformation {
+  margin-top: 2rem;
+  padding: 1.2rem 2rem;
+  border-top: 1px solid black;
+}
+
 /* ----------------------- */
 /* ----------------------- */
+.bookHeaderContainer {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid black;
+}
+
+.bookViewDate {
+  border: 1px solid #505978;
+  border-radius: 5px;
+  margin: 1em auto;
+  width: 50%;
+}
 main {
   min-width: 15%;
 }
 
 .header {
   text-align: center;
-  background-color: #fe4f5a;
+  background-color: #445181;
   padding: 0.5rem;
 }
 .header h1 {
@@ -399,7 +427,7 @@ main {
 }
 .body button {
   padding: 0.8rem 1.5rem;
-  background-color: #fe4f5a;
+  background-color: #505978;
   border: none;
   color: white;
   font-weight: bold;
