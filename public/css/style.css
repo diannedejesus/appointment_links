@@ -25,6 +25,10 @@
 /******************************************
 /* BASE STYLES
 /*******************************************/
+body {
+  background-color: #faf3ea;
+  color: #2a2f2c;
+}
 nav {
   padding: 1em;
 }
@@ -33,6 +37,10 @@ nav {
   border-radius: 5px;
   border: 1px solid lightgray;
   padding: 0.5rem 1.5rem;
+}
+
+main {
+  min-width: 30%;
 }
 
 /******************************************
@@ -332,10 +340,13 @@ th {
 .timesGrid {
   padding: 0 2rem;
 }
-
+/* .timesGrid button {
+  float: right;
+} */
 .timesGrid fieldset {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   border: 0;
 }
@@ -377,33 +388,41 @@ th {
 .appointmentInformation {
   margin-top: 2rem;
   padding: 1.2rem 2rem;
-  border-top: 1px solid black;
+  border-top: 1px solid #332925;
+  background-color: #ffc366;
+  border-radius: 0 0 18px 18px;
+}
+.appointmentInformation p {
+  margin: 0.5em;
 }
 
-/* ----------------------- */
-/* ----------------------- */
-.bookHeaderContainer {
-  padding: 1rem 2rem;
-  border-bottom: 1px solid black;
-}
-
-.bookViewDate {
-  border: 1px solid #505978;
-  border-radius: 5px;
+/* ------------------------------ */
+/* Booking Page Styles */
+/* ------------------------------ */
+.bookDate {
   margin: 1em auto;
   width: 50%;
+  border: 2px solid #332925;
+  border-radius: 20px;
 }
-main {
-  min-width: 15%;
+
+.bookHeaderContainer {
+  padding: 1rem 2rem;
+  background-color: #add5b8;
+  border-bottom: 1px solid #332925;
+  border-radius: 18px 18px 0 0;
 }
 
 .header {
   text-align: center;
-  background-color: #445181;
+  background-color: #add5b8;
+  border-bottom: 1px solid #332925;
+  border-radius: 18px 18px 0 0;
   padding: 0.5rem;
 }
 .header h1 {
   line-height: 1.8rem;
+  color: #2a2f2c;
 }
 .header h2 {
   font-weight: normal;
@@ -416,9 +435,12 @@ main {
   align-items: center;
   gap: 1rem;
   padding: 2rem;
+  background-color: #fefaf0;
+  border-radius: 0 0 18px 18px;
 }
 .body i {
   font-size: 3rem;
+  /* color: #ffc366; */
 }
 .body p.topic {
   margin: 0;
@@ -427,11 +449,11 @@ main {
 }
 .body button {
   padding: 0.8rem 1.5rem;
-  background-color: #505978;
-  border: none;
-  color: white;
+  background-color: #ffc366;
+  border: 1px solid #332925;
+  border-radius: 10px;
+  color: #332925;
   font-weight: bold;
-  border-radius: 5px;
 }
 
 .dateContainer {
@@ -442,7 +464,7 @@ main {
 }
 
 /* ----------------------------------------- */
-/* ----------------------------------------- */
+/* Menu Styles */
 /* ----------------------------------------- */
 
 nav {
