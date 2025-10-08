@@ -11,12 +11,12 @@
 <body>
     <nav>
         <p>Reservando<span>UrbTask</span></p>
-        <ul>
+        <!-- <ul>
             <li><a href='/calendar'>calendario</a></li>
             <li><a href='/setdates'>fijar fechas</a></li>
             <li><a href='/signup/logout' class='signout'>salir</a></li>
             <li><a href='/login/configure'>configurar</a></li>
-        </ul>
+        </ul> -->
     </nav>
     
     <main class="bookDate">
@@ -28,7 +28,7 @@
                 <h2><%= reservationInfo[0].name %></h2>
             </section>
             <section class="body">
-                <p class="topic">Tema: <%= reservationInfo[0].subject %> topic that needs to be done in person (con Tecnico Programa)</p>
+                <p class="topic">Tema: <%= reservationInfo[0].subject %> topic that needs to be done in person (con <%= reservationInfo[0].owner %>)</p>
 
                 <section class="dateContainer">
                     <p>
@@ -107,7 +107,7 @@
             <section class="appointmentInformation">
                 <h2>Appointment Information</h2>
                 <p><strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>)</p>
-                <p>El proposito es: <%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con Nombre Personal en <%= reservationInfo[0].location %></p>
+                <p>El proposito es: <%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con <%= reservationInfo[0].owner %> en <%= reservationInfo[0].location %></p>
                 
             </section>
         <% } %>
