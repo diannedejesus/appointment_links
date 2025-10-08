@@ -32,11 +32,18 @@ body {
 nav {
   padding: 1em;
 }
+nav span {
+  display: block;
+  font-weight: normal;
+  font-size: smaller;
+  color: gray;
+  /* text-align: center; */
+}
 
 .button {
   border-radius: 5px;
   border: 1px solid lightgray;
-  padding: 0.5rem 1.5rem;
+  padding: 0.8rem 1.5rem;
 }
 
 main {
@@ -329,7 +336,7 @@ th {
   margin-bottom: 1.5rem;
 }
 .dateSlider li.selected {
-  border-bottom: 8px solid coral;
+  border-bottom: 8px solid #ffc366;
 }
 .dateSlider {
   display: flex;
@@ -339,14 +346,20 @@ th {
 
 .timesGrid {
   padding: 0 2rem;
+  display: flex;
+  justify-content: center;
 }
-/* .timesGrid button {
-  float: right;
-} */
+.timesGrid button {
+  font-size: 1rem;
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
 .timesGrid fieldset {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
   gap: 20px;
   border: 0;
 }
@@ -354,7 +367,7 @@ th {
 .timeslots {
   color: #808c9c;
   width: fit-content;
-  padding: 0.9rem 1.2rem;
+  padding: 0.9rem 1rem;
   border-radius: 5px;
   border: 2px solid #d9d9d9;
   font-size: 1.1rem;
@@ -391,6 +404,10 @@ th {
   border-top: 1px solid #332925;
   background-color: #ffc366;
   border-radius: 0 0 18px 18px;
+  color: #332925;
+}
+.appointmentInformation h2 {
+  color: black;
 }
 .appointmentInformation p {
   margin: 0.5em;
@@ -401,7 +418,7 @@ th {
 /* ------------------------------ */
 .bookDate {
   margin: 1em auto;
-  width: 50%;
+  width: 60%;
   border: 2px solid #332925;
   border-radius: 20px;
 }
@@ -418,15 +435,22 @@ th {
   background-color: #add5b8;
   border-bottom: 1px solid #332925;
   border-radius: 18px 18px 0 0;
-  padding: 0.5rem;
+  padding: 2rem;
 }
 .header h1 {
+  font-size: 1.8rem;
   line-height: 1.8rem;
   color: #2a2f2c;
+  margin: 0;
+}
+.header i {
+  font-size: 3rem;
 }
 .header h2 {
-  font-weight: normal;
-  color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #faf3ea;
+  margin: 1rem 0 0 0;
 }
 
 .body {
@@ -438,29 +462,24 @@ th {
   background-color: #fefaf0;
   border-radius: 0 0 18px 18px;
 }
-.body i {
-  font-size: 3rem;
-  /* color: #ffc366; */
-}
-.body p.topic {
+.body p {
   margin: 0;
-  padding: 1.2rem;
-  font-weight: bold;
 }
 .body button {
   padding: 0.8rem 1.5rem;
   background-color: #ffc366;
-  border: 1px solid #332925;
-  border-radius: 10px;
-  color: #332925;
+  border: 1px solid #6d6663;
+  border-radius: 5px;
+  color: #2a2f2c;
   font-weight: bold;
+}
+.body .mensaje {
+  color: gray;
 }
 
 .dateContainer {
   font-size: larger;
-}
-.dateContainer p {
-  margin: 0;
+  margin: 1rem 0;
 }
 
 /* ----------------------------------------- */

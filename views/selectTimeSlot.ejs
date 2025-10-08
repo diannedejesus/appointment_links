@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav>
-        <p>Reservando</p>
+        <p>Reservando<span>UrbTask</span></p>
         <ul>
             <li><a href='/calendar'>calendario</a></li>
             <li><a href='/setdates'>fijar fechas</a></li>
@@ -23,33 +23,38 @@
         <% if (isFilled) { %>
             <% const currentTimeSlot = new Date(timeSlots) %>
             <section class="header">
-                <h1>Cita <br /> Programado</h1>
-                <h2>para <%= reservationInfo[0].name %></h2>
+                <i class="fa-regular fa-calendar-check"></i>
+                <h1>Cita Programado</h1>
+                <h2><%= reservationInfo[0].name %></h2>
             </section>
             <section class="body">
-                <i class="fa-regular fa-calendar-check"></i>
-                <p class="topic">Tema: <%= reservationInfo[0].subject %> (con Tecnico Programa)</p>
+                <p class="topic">Tema: <%= reservationInfo[0].subject %> topic that needs to be done in person (con Tecnico Programa)</p>
 
                 <section class="dateContainer">
-                    <p><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>, <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %> de <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %> de <%= currentTimeSlot.toLocaleString('es-US', { year: "numeric" }) %></p>
-                    <p><%= currentTimeSlot.toLocaleString('es-US', { timeStyle: 'short' }) %> hasta <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p>
+                    <p>
+                        <b><%= new Date(currentTimeSlot).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %></b> -- 
+                        <%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>
+                        <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %>
+                        <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %>
+                    </p>
+                    <!-- 
+                        <p><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>, <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %> de <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %> de <%= currentTimeSlot.toLocaleString('es-US', { year: "numeric" }) %></p>
+                        <p><%= currentTimeSlot.toLocaleString('es-US', { timeStyle: 'short' }) %> hasta <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p> 
+                    -->
                 </section>
 
-                <p>Gracias, su cita ha sido programado con exito.</p>
+                <p class="mensaje">Gracias, su cita ha sido programado con exito.</p>
 
-                <button>Cambiar o cancelar cita</button>
+                <button>Cambiar o Cancelar Cita</button>
             </section>
         <% } else { %>
             
             <section class="bookHeaderContainer">
-                <h1>Book a Date</h1>
+                <h1>Reservar Fecha</h1>
                 <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
-            </section>
+            </section>           
             
-            
-            <section class="dateSliderContainer">
-                
-
+            <section class="dateSliderContainer">  
                 <% const dateAdded = [] %>
                 <% const selectedDate = new Date(selectedDay ?? timeSlots[0])  %>
 
@@ -101,13 +106,10 @@
 
             <section class="appointmentInformation">
                 <h2>Appointment Information</h2>
-                <p><strong>Name:</strong> <%= reservationInfo[0].name %></p>
-                <p><strong>Email:</strong> <%= reservationInfo[0].email %></p>
-                <p><strong>Duration:</strong> <%= reservationInfo[0].duration %></p>
-                <p><strong>Subject Matter:</strong> <%= reservationInfo[0].subject %></p>
+                <p><strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>)</p>
+                <p>El proposito es: <%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con Nombre Personal en <%= reservationInfo[0].location %></p>
+                
             </section>
-            
-            
         <% } %>
    </main> 
     

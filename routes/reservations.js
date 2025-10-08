@@ -12,6 +12,6 @@ router.post('/resendEmail', ensureAuth, bookingController.resendEmail)
 
 router.post('/assignTimeSlot', bookingController.assignTimeSlot)
 
-router.delete('/deleteDates', bookingController.deleteTimeSlot)
+router.delete('/deleteDates', ensureAuth, bookingController.deleteTimeSlot)
 
 export default router

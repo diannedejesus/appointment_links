@@ -3,7 +3,7 @@ import * as calendarController from '../controllers/calendarCont.js'
 import {ensureAuth, ensureGuest} from '../middleware/auth.js';
 const router = express.Router()
 
-router.get('/', calendarController.getIndex)
+router.get('/', ensureAuth, calendarController.getIndex)
 
 //router.post('/addDate', ensureAuth, calendarController.addDate)
 // router.put('/assignTimeSlot', bookingController.assignTimeSlot)

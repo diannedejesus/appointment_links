@@ -5,8 +5,8 @@ const router = express.Router()
 
 router.get('/', loginCont.getPage);
 router.post('/', loginCont.postLogin);
-router.get('/configure', loginCont.getConfigureCalendar);
-router.post('/configure', loginCont.configureCalendar);
+router.get('/configure', ensureAuth, loginCont.getConfigureCalendar);
+router.post('/configure', ensureAuth, loginCont.configureCalendar);
 
 export default router
  
