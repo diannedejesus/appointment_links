@@ -1,6 +1,6 @@
 import express from 'express'
 import * as loginCont from '../controllers/loginCont.js';
-//import {ensureAuth, ensureGuest} from '../middleware/auth.js';
+import {ensureAuth, ensureGuest} from '../middleware/auth.js';
 const router = express.Router()
 
 router.get('/', loginCont.getPage);
