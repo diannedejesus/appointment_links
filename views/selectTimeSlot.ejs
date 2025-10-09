@@ -11,12 +11,13 @@
 <body>
     <nav>
         <p>Reservando<span>UrbTask</span></p>
-        <!-- <ul>
-            <li><a href='/calendar'>calendario</a></li>
+        <ul>
+            <!-- <li><a href='/calendar'>calendario</a></li>
             <li><a href='/setdates'>fijar fechas</a></li>
             <li><a href='/signup/logout' class='signout'>salir</a></li>
-            <li><a href='/login/configure'>configurar</a></li>
-        </ul> -->
+            <li><a href='/login/configure'>configurar</a></li> -->
+            <li><a href='/'>Home</a></li>
+        </ul>
     </nav>
     
     <main class="bookDate">
@@ -51,7 +52,7 @@
             
             <section class="bookHeaderContainer">
                 <h1>Reservar Fecha</h1>
-                <p>In order to process your case we require an in person talk with you. Please reserve a time slot that that best fits your schedule.</p>
+                <p>Hola, <strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>), selecione un horario para su cita.</p>
             </section>           
             
             <section class="dateSliderContainer">  
@@ -105,9 +106,8 @@
             </section>
 
             <section class="appointmentInformation">
-                <h2>Appointment Information</h2>
-                <p><strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>)</p>
-                <p>El proposito es: <%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con <%= reservationInfo[0].owner %> en <%= reservationInfo[0].location %></p>
+                <h2>Proposito de su Cita</h2>
+                <p><%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con <%= reservationInfo[0].owner %> en <%= reservationInfo[0].location %></p>
                 
             </section>
         <% } %>
