@@ -8,7 +8,7 @@ router.get('/selectTimeSlot', bookingController.selectTimeSlots)
 router.get('/selectTimeSlot/:id', bookingController.selectTimeSlots)
 
 router.post('/createTimeSlot', ensureAuth, bookingController.createTimeSlot)
-router.post('/resendEmail', ensureAuth, bookingController.resendEmail)
+router.post('/sendEmail', ensureAuth, bookingController.sendEmail)
 
 router.post('/assignTimeSlot', bookingController.assignTimeSlot)
 

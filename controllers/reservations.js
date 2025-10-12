@@ -1,7 +1,6 @@
 import TimeSlotDB from '../models/TimeSlots.js'
 import ReservedSlotDB from '../models/Reservations.js'
 import DatesDB from '../models/Dates.js'
-//const ewsOptions = require('../ewsConnections')
 import * as nanoid from 'nanoid'
 
 
@@ -64,7 +63,7 @@ export async function selectTimeSlots (req,res) {
     }
 }
 
-export async function resendEmail (req, res){ //uses ews
+export async function sendEmail (req, res){ //uses ews
 
     try{
         const reservationData = await ReservedSlotDB.findOne({linkId: req.body.idFromJSFile})

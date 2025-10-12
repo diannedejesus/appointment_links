@@ -1,6 +1,7 @@
 import express from 'express'
 const app = express()
 import connectDB from './config/database.js'
+import * as ewsTest from './ewsConnections.js'
 
 //routes path
 import loginRoutes from './routes/login.js'
@@ -15,7 +16,6 @@ import MongoStore from 'connect-mongo' //saving session data in the db
 
 import dotenv from 'dotenv'
 dotenv.config({path: './config/.env'})
-
 
 // Passport config
 import passportConfig from './config/passport.js'
@@ -49,4 +49,7 @@ app.use('/calendar', calendarRoutes)
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Server is running on PORT: ${process.env.PORT} , you better catch it!`)
+    //ewsTest.addCalendarEvent();
+    //ewsTest.sendEmail('djs.dianne@gmail.com');
+    //oldEwsTest();
 })

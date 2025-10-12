@@ -1,131 +1,70 @@
-const crypto = require ("crypto");
-const EWS = require('node-ews');
-const NTLMAuth = require('httpntlm').ntlm;
+import crypto from "crypto";
+import ews, { DateTime, EmailMessage } from 'ews-javascript-api';
+var exch = new ews.ExchangeService(ews.ExchangeVersion.Exchange2016);
+  exch.Url = new ews.Uri("https://east.exch032.serverdata.net/ews/exchange.asmx");
 
-module.exports = {
-    addDates: async function(password, email, options) {
-        const algorithm = "aes-256-cbc"; 
-        // the decipher function
-        const decipher = crypto.createDecipheriv(algorithm, process.env.Skey, process.env.initVector);
-        let decryptedData = decipher.update(password, "hex", "utf-8");
+export async function GetEmail() {
+  console.log('test')
+  exch.Credentials = new ews.WebCredentials(process.env.exchangeUser, process.env.exchangePass);
 
-        decryptedData += decipher.final("utf8");
+  exch.FindItems(
+    ews.WellKnownFolderName.Inbox,
+    new ews.ItemView(1)
+  ).then(findResults => {
+    if (findResults.TotalCount > 0) {
+      const itemId = findResults.Items[0].Id; // Get the first email's ID
+      // Load the full email message
+      ews.EmailMessage.Bind(exch, itemId).then(email => {
+        console.log('Subject:', email.Subject);
+        console.log('From:', email.From.Address);
+        console.log('Body:', email.Body.Text);
+      });
+    }
+  }).catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+//subject, body, recipient, attachment, CC, options,
+export async function sendEmail(recipient) {
+  exch.Credentials = new ews.WebCredentials(process.env.exchangeUser, process.env.exchangePass);
+
+  var msg = new EmailMessage(exch);
+  msg.Subject = 'Test Email';
+  msg.Body = new ews.MessageBody("This is a test email sent using the ews-js-api");
+  msg.ToRecipients.Add(recipient)
+            //msg.CcRecipients
+            //msg.IsDeliveryReceiptRequested
+              
+            /** var file = msgattach.Attachments.AddFileAttachment("filename to attach.txt", "c29tZSB0ZXh0");
+             * AddFileAttachment parameters - 
+             * filename (name of attachment as shown in outlook/owa not actual file from disk), 
+             * base64 content of file (read file from disk and convert to base64 yourself)
+             */
+
+  msg.Send().then(() => {
+    console.log("Email sent successfully.");
+  }, (error) => {
+    console.log("Error sending email: " + error.stack);
+  });
+}
+
+//subject, body, start date, end date, location, invitetee, show as , email reminder
+export async function addCalendarEvent() {
+  exch.Credentials = new ews.WebCredentials(process.env.exchangeUser, process.env.exchangePass);
+  let appointmentDate = new ews.DateTime(new Date().toISOString());
+
+  const event = new ews.Appointment(exch)
+  event.Subject = "the title"
+  event.Start = appointmentDate;
+  
+  //event.End = appointmentDate.AddMinutes(30)
 
 
-        // store the ntHashedPassword and lmHashedPassword to reuse later for reconnecting
-        const ntHashedPassword = NTLMAuth.create_NT_hashed_password(decryptedData);
-        const lmHashedPassword = NTLMAuth.create_LM_hashed_password(decryptedData);
-
-        // exchange server connection info
-        const ewsConfig = {
-            username: email,
-            nt_password: ntHashedPassword,
-            lm_password: lmHashedPassword,
-            host: 'https://east.exch032.serverdata.net/'
-        };
-
-        // initialize node-ews
-        const ews = new EWS(ewsConfig);
-
-        const ewsFunction = 'CreateItem';
-        const ewsArgs = {
-            'attributes': {
-                'SendMeetingInvitations': 'SendToAllAndSaveCopy'
-            },
-            'Items': {
-                'CalendarItem': {
-                    'ReminderIsSet': true,
-                    'ReminderMinutesBeforeStart': 60,
-                    'IsAllDayEvent':false,
-                    'LegacyFreeBusyStatus': 'Busy',
-                    'RequiredAttendees': {
-                        'Attendee': {
-                            'Mailbox': {
-                                'EmailAddress': 'djesus@gurabopr.com'
-                            }
-                        }
-                    }, //can't get it to send email to attendees
-                    ...options
-                }
-            }
-        };
-
-
-        // query EWS and print resulting JSON to console
-        ews.run(ewsFunction, ewsArgs)
-        .then(result => {
-            console.log(JSON.stringify(result));
-        })
-        .catch(err => {
-            console.log(err.message);
-        });
-    },
-
-    sendEmail: async function(password, email, options) {
-        const algorithm = "aes-256-cbc"; 
-        // the decipher function
-        const decipher = crypto.createDecipheriv(algorithm, process.env.Skey, process.env.initVector);
-        let decryptedData = decipher.update(password, "hex", "utf-8");
-
-        decryptedData += decipher.final("utf8");
-
-        // store the ntHashedPassword and lmHashedPassword to reuse later for reconnecting
-        const ntHashedPassword = NTLMAuth.create_NT_hashed_password(decryptedData);
-        const lmHashedPassword = NTLMAuth.create_LM_hashed_password(decryptedData);
-
-        // exchange server connection info
-        const ewsConfig = {
-            username: email,
-            nt_password: ntHashedPassword,
-            lm_password: lmHashedPassword,
-            host: 'https://east.exch032.serverdata.net/'
-        };
-
-        // initialize node-ews
-        const ews = new EWS(ewsConfig);
-
-        const ewsFunction = 'CreateItem';
-
-        const ewsArgs = {
-            "attributes" : {
-              "MessageDisposition" : "SendAndSaveCopy"
-            },
-            "SavedItemFolderId": {
-              "DistinguishedFolderId": {
-                "attributes": {
-                  "Id": "sentitems"
-                }
-              }
-            },
-            "Items" : {
-              "Message" : {
-                "ItemClass": "IPM.Note",
-                "Subject" : options.Subject,
-                "Body" : {
-                  "attributes": {
-                    "BodyType" : "Text"
-                  },
-                  "$value": options.Body
-                },
-                "ToRecipients" : {
-                  "Mailbox" : {
-                    "EmailAddress" : options.Email
-                  }
-                },
-                "IsRead": "false"
-              }
-            }
-        };
-
-        //console.log(ewsArgs.Items.Message.Body.$value)
-        //console.log(ewsArgs.Items.Message.ToRecipients.Mailbox.EmailAddress)
-        // query EWS and print resulting JSON to console
-        ews.run(ewsFunction, ewsArgs)
-        .then(result => {
-            console.log(JSON.stringify(result));
-        })
-        .catch(err => {
-            console.log(err.message);
-        });
-    },
+  event.Save(ews.WellKnownFolderName.Calendar, ews.SendInvitationsMode.SendToNone)
+  .then(() => {
+    console.log("Calendar sent successfully.");
+  }, (error) => {
+    console.log("Error sending Calendar: " + error.stack);
+  });
 }
