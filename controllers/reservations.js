@@ -6,9 +6,15 @@ import * as nanoid from 'nanoid'
 
 export async function show_setDates (req,res){
     try{
-        const slots = await TimeSlotDB.find()
+        const reservationsLists = []
         const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+
+        for(let reservationItem of reservationsMade){
+            reservationsLists.push(reservationItem.linkId)
+        }
+
+        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
         
         res.render('setDates.ejs', {
             timeSlots: slots,
@@ -33,14 +39,13 @@ export async function selectTimeSlots (req,res) {
 
         const reservation = await ReservedSlotDB.find(currentLink)
         const timeSlots = await TimeSlotDB.find(currentLink)
-        const reservedSlots = await TimeSlotDB.find().select('selectedSlot')
-
+        const reservedSlots = await TimeSlotDB.find().select('selectedSlot')   
         const isFilled = timeSlots[0].selectedSlot ? true : false
 
         if(isFilled){
             availableSlots.push(timeSlots[0].selectedSlot)
         }else{
-            availableSlots = timeSlots[0].slotChoices 
+            availableSlots = timeSlots[0].slotChoices
         }
 
         availableSlots = availableSlots.sort()
