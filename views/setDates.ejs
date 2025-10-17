@@ -22,9 +22,9 @@
         <h1>Set Available Dates</h1>
         <section>
             <form action="/setDates/createTimeSlot" method='POST'>
-                <fieldset id="">
                     <div class="subFields">
-                        <h3>Información del Cliente</h3>
+                        <h3>Cliente</h3>
+
                         <label for='nameItem'>Nombre</label>
                         <input type="text" placeholder="Fulano de Pueblo" id='nameItem' name='nameItem'>
                     
@@ -34,10 +34,10 @@
                     
                     <div class="subFields">
                         <h3 for='appointmentDates'>Información de la Cita</h3>
-                        <label for='subjectItem'>Sujeto de la Cita</label>
+                        <label for='subjectItem'>Sujeto</label>
                         <input type="text" class="longTextInput" placeholder="Discusion de Caso" id='subjectItem' name='subjectItem'> 
                     
-                        <label for='locationItem'>Lugar de la Cita</label>
+                        <label for='locationItem'>Lugar</label>
                         <input type="text" class="longTextInput" placeholder="Salon de reunion primer piso" id='locationItem' name='locationItem'>
                     
                         <label for='durationItem'>Duración</label>
@@ -79,51 +79,50 @@
                     </div>
                 
                     <input type="submit">
-                </fieldset>
             </form>
         </section>
-        <section>
-            <h2>Created Reservations</h2>
-            <h3>Unreserved Dates: <%= left %></h3>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <!-- <th>email</th> -->
-                    <!-- <th>location</th> -->
-                    <th>Subject</th>
-                    <th>Duration</th>
-                    <th>Link</th>
-                    <th>Status</th>
-                    <th>Resend</th>
-                    <th>Remove</th>
-                </tr>
-                <% reservations.forEach( (el) => { %>
-                <tr>
-                    <td><%= el.name %></td>
-                    <!-- <td><%= el.email %></td> -->
-                    <!-- <td><%= el.location %></td> -->
-                    <td><%= el.subject %></td>
-                    <td><% if(el.duration <= 60){ %>
-                        <%= el.duration %> min
-                    <% }else{ %>
-                       <%= el.duration/60 %> hours
-                    <% } %>
-                    <td>
-                        <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
-                    </td>
-                    <td><% timeSlots.forEach( (ele) => { %>
-                        <% if (ele.linkId === el.linkId) { %> 
-                            <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
-                        <% } %>   
-                    <% }) %>
-                    </td>
-                    <td data-id='<%= el.linkId %>'><a class='sendMail'>Send Email</a></td>
-                    <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
-                </tr>
+    </main>
+    <section>
+        <h2>Created Reservations</h2>
+        <h3>Unreserved Dates: <%= left %></h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <!-- <th>email</th> -->
+                <!-- <th>location</th> -->
+                <th>Subject</th>
+                <th>Duration</th>
+                <th>Link</th>
+                <th>Status</th>
+                <th>Resend</th>
+                <th>Remove</th>
+            </tr>
+            <% reservations.forEach( (el) => { %>
+            <tr>
+                <td><%= el.name %></td>
+                <!-- <td><%= el.email %></td> -->
+                <!-- <td><%= el.location %></td> -->
+                <td><%= el.subject %></td>
+                <td><% if(el.duration <= 60){ %>
+                    <%= el.duration %> min
+                <% }else{ %>
+                    <%= el.duration/60 %> hours
+                <% } %>
+                <td>
+                    <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
+                </td>
+                <td><% timeSlots.forEach( (ele) => { %>
+                    <% if (ele.linkId === el.linkId) { %> 
+                        <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
+                    <% } %>   
                 <% }) %>
-            </table>
-        </section>
-    </main> 
+                </td>
+                <td data-id='<%= el.linkId %>'><a class='sendMail'>Send Email</a></td>
+                <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
+            </tr>
+            <% }) %>
+        </table>
+    </section> 
     <script src="../js/main.js"></script>
 </body>
 </html>

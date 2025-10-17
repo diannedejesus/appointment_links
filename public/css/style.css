@@ -130,9 +130,9 @@ section.weekDayContainer p + p {
 
 .setDateContainer {
   margin: 2rem;
-}
-.setDateContainer section {
-  margin: 2rem;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 2rem;
 }
 
 .longTextInput {
@@ -147,16 +147,17 @@ section.weekDayContainer p + p {
   font-size: 1.3rem;
 }
 
-.setDateContainer fieldset {
+.setDateContainer {
   max-width: 30rem;
 }
-.setDateContainer fieldset h3 {
-  border-bottom: 1px solid lightgrey;
+.setDateContainer h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
 }
-.setDateContainer fieldset.subFields {
-  margin: 2rem;
-  padding: 2rem 1rem;
-  border: 0.3rem solid black;
+.setDateContainer .subFields {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1rem;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
@@ -190,8 +191,9 @@ section.weekDayContainer p + p {
 .setDateContainer input[type="date"],
 .setDateContainer input[type="datetime-local"],
 .setDateContainer select {
-  border: 1px solid rgb(163, 163, 163);
-  background-color: #faf3ea;
+  border: 0;
+  /* border-bottom: 1px solid rgb(163, 163, 163); */
+  background-color: #eeebe3;
   border-radius: 5px;
   padding: 10px 5px;
 }
