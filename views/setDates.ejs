@@ -19,7 +19,10 @@
     </nav>
    
     <main class="setDateContainer">
-        <h1>Set Available Dates</h1>
+        <header>
+            <h1>Set Available Dates</h1>
+        </header>
+        
         <section>
             <form action="/setDates/createTimeSlot" method='POST'>
                     <div class="subFields">
@@ -27,7 +30,7 @@
 
                         <label for='nameItem'>Nombre</label>
                         <input type="text" placeholder="Fulano de Pueblo" id='nameItem' name='nameItem'>
-                    
+
                         <label for='emailItem'>Correo Electronico</label>
                         <input type="text" placeholder="correo@lugar.com" id='emailItem' name='emailItem'>
                     </div>
@@ -49,7 +52,7 @@
                         </select>
                     </div>
                     
-                    <div id='appointmentDates' class="subFields">
+                    <div id='appointmentDates' class="subFields datesSelection">
                         <h3 for='appointmentDates'>Selecione Hora y Día</h3>
 
                         <label for='dateItem'>Fecha</label>
@@ -66,6 +69,7 @@
                             <option value="14">2</option>
                             <option value="15">3</option>
                         </select>
+
                         <select id='minuteItem' name='minuteItem'>
                             <option value="">--minuto--</option>
                             <option value="30">30</option>
@@ -74,7 +78,7 @@
                         
                         <input type="button" class='addDate' value='Añadir'>
                         
-                        <h2>Fechas para Citas</h2>
+                        <h3>Fechas para Citas</h3>
                         <ul id='timeSlots'></ul>
                     </div>
                 
