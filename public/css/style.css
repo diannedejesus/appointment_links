@@ -202,11 +202,12 @@ section.weekDayContainer p + p {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  width: 100%;
+  /* width: 100%; */
 }
 .setDateContainer input[type="button"] {
-  background-color: #29a3df;
-  color: white;
+  background-color: #ffc366;
+  border: 1px solid #332925;
+  /* color: white; */
   font-weight: bold;
 }
 .setDateContainer input[type="submit"] {
