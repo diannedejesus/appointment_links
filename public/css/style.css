@@ -42,16 +42,26 @@ nav span {
 
 .button {
   border-radius: 5px;
-  border: 1px solid lightgray;
+  border: 1px solid #6d6663;
   padding: 0.8rem 1.5rem;
+  font-weight: bold;
 }
 
 main {
+  margin: 1em auto;
   min-width: 30%;
+  max-width: 31rem;
+  border: 3px solid #332925;
+  border-radius: 20px;
+}
+
+header {
+  border-radius: 18px 18px 0 0;
+  padding: 2rem 1rem;
 }
 
 /******************************************
-/* BASE STYLES
+/* CALENDAR STYLES
 /*******************************************/
 
 .calendarContainer {
@@ -125,18 +135,18 @@ section.weekDayContainer p + p {
   flex-grow: 2;
 }
 
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
+/******************************************
+/* Set Date STYLES
+/*******************************************/
 
-.setDateContainer {
-  margin: 2rem;
-  border: 3px solid black;
-  border-radius: 10px;
-}
 .setDateContainer header {
   background-color: #ffc366;
-  border-radius: 8px 8px 0 0;
-  padding: 2rem 1rem;
+}
+.setDateContainer h1 {
+  font-variant: small-caps;
+  font-size: 1.5rem;
+  margin: 0;
+  /* background-color: #add5b8; */
 }
 
 .setDateContainer section {
@@ -150,12 +160,6 @@ section.weekDayContainer p + p {
   width: 30%;
 }
 
-.setDateContainer h1 {
-  font-variant: small-caps;
-  font-size: 1.5rem;
-  margin: 0;
-  /* background-color: #add5b8; */
-}
 .setDateContainer .datesSelection h3 {
   padding: 0;
 }
@@ -167,9 +171,6 @@ section.weekDayContainer p + p {
   /* border: 3px solid #6d6663; */
 }
 
-.setDateContainer {
-  max-width: 31rem;
-}
 .setDateContainer h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
@@ -208,12 +209,12 @@ section.weekDayContainer p + p {
   background-color: #ffc366;
   border: 1px solid #332925;
   /* color: white; */
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .setDateContainer input[type="submit"] {
   background-color: #54c351;
   color: white;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .setDateContainer input[type="text"],
 .setDateContainer input[type="date"],
@@ -380,9 +381,9 @@ th {
   justify-content: center;
 }
 .timesGrid button {
-  font-size: 1rem;
+  /* font-size: 1rem; */
   width: 100%;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
   margin-top: 2rem;
 }
 .timesGrid fieldset {
@@ -446,26 +447,20 @@ th {
 /* ------------------------------ */
 /* Booking Page Styles */
 /* ------------------------------ */
-.bookDate {
-  margin: 1em auto;
-  width: 60%;
-  border: 2px solid #332925;
-  border-radius: 20px;
-}
 
 .bookHeaderContainer {
-  padding: 1rem 2rem;
+  /* padding: 1rem 2rem; */
   background-color: #add5b8;
   border-bottom: 1px solid #332925;
-  border-radius: 18px 18px 0 0;
+  /* border-radius: 18px 18px 0 0; */
 }
 
 .header {
   text-align: center;
   background-color: #add5b8;
   border-bottom: 1px solid #332925;
-  border-radius: 18px 18px 0 0;
-  padding: 2rem;
+  /* border-radius: 18px 18px 0 0; */
+  /* padding: 2rem; */
 }
 .header h1 {
   font-size: 1.8rem;
@@ -496,12 +491,12 @@ th {
   margin: 0;
 }
 .body button {
-  padding: 0.8rem 1.5rem;
+  /* padding: 0.8rem 1.5rem; */
   background-color: #ffc366;
-  border: 1px solid #6d6663;
-  border-radius: 5px;
-  color: #2a2f2c;
-  font-weight: bold;
+  /* border: 1px solid #6d6663; */
+  /* border-radius: 5px; */
+  /* color: #2a2f2c; */
+  /* font-weight: bold; */
 }
 .body .mensaje {
   color: gray;

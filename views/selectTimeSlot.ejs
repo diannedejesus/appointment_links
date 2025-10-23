@@ -23,11 +23,11 @@
     <main class="bookDate">
         <% if (isFilled) { %>
             <% const currentTimeSlot = new Date(timeSlots) %>
-            <section class="header">
+            <header class="header">
                 <i class="fa-regular fa-calendar-check"></i>
                 <h1>Cita Programado</h1>
                 <h2><%= reservationInfo[0].name %></h2>
-            </section>
+            </header>
             <section class="body">
                 <p class="topic">Tema: <%= reservationInfo[0].subject %> topic that needs to be done in person (con <%= reservationInfo[0].owner %>)</p>
 
@@ -46,14 +46,14 @@
 
                 <p class="mensaje">Gracias, su cita ha sido programado con exito.</p>
 
-                <button>Cambiar o Cancelar Cita</button>
+                <button class="button">Cambiar o Cancelar Cita</button>
             </section>
         <% } else { %>
             
-            <section class="bookHeaderContainer">
+            <header class="bookHeaderContainer">
                 <h1>Reservar Fecha</h1>
                 <p>Hola, <strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>), selecione un horario para su cita.</p>
-            </section>           
+            </header>           
             
             <section class="dateSliderContainer">  
                 <% const dateAdded = [] %>
