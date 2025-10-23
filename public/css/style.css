@@ -200,9 +200,9 @@ section.weekDayContainer p + p {
 .setDateContainer input[type="button"],
 .setDateContainer input[type="submit"] {
   margin: 1rem 0;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   border: none;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   /* width: 100%; */
 }
 .setDateContainer input[type="button"] {
