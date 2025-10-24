@@ -488,3 +488,13 @@ nav p {
   text-transform: uppercase;
   font-weight: bold;
 }
+
+/******************************************
+/* View Reservations Page
+/*******************************************/
+main.reservationsList {
+  max-width: max-content;
+}
+.reservationsList section {
+  padding: 2rem;
+}
