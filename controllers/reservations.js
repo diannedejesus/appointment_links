@@ -4,27 +4,7 @@ import DatesDB from '../models/Dates.js'
 import * as nanoid from 'nanoid'
 
 
-export async function show_setDates (req,res){
-    try{
-        const reservationsLists = []
-        const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
-        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
 
-        for(let reservationItem of reservationsMade){
-            reservationsLists.push(reservationItem.linkId)
-        }
-
-        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
-        
-        res.render('setDates.ejs', {
-            timeSlots: slots,
-            left: itemsLeft,
-            reservations: reservationsMade
-        })
-    }catch(error){
-        console.log(error)
-    }
-}
 
 export async function selectTimeSlots (req,res) {  
     try{
@@ -234,7 +214,6 @@ export async function deleteTimeSlot (req, res){
 export async function show_reservations (req,res){
     try{
         const reservationsLists = []
-        const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
 
         for(let reservationItem of reservationsMade){
@@ -242,8 +221,37 @@ export async function show_reservations (req,res){
         }
 
         const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
+        const itemsLeft = await TimeSlotDB.countDocuments({
+            linkId: {$in: reservationsLists}, 
+            selectedSlot: ''
+        })
         
         res.render('ViewReservations.ejs', {
+            timeSlots: slots, 
+            left: itemsLeft,
+            reservations: reservationsMade
+        })
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export async function show_setDates (req,res){
+    try{
+        const reservationsLists = []
+        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+
+        for(let reservationItem of reservationsMade){
+            reservationsLists.push(reservationItem.linkId)
+        }
+
+        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
+        const itemsLeft = await TimeSlotDB.countDocuments({
+            linkId: {$in: reservationsLists}, 
+            selectedSlot: ''
+        })
+        
+        res.render('setDates.ejs', {
             timeSlots: slots,
             left: itemsLeft,
             reservations: reservationsMade
