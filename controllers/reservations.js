@@ -229,3 +229,26 @@ export async function deleteTimeSlot (req, res){
         console.log(error)
     }
 }
+
+
+export async function show_reservations (req,res){
+    try{
+        const reservationsLists = []
+        const itemsLeft = await TimeSlotDB.countDocuments({selectedSlot: ''})
+        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+
+        for(let reservationItem of reservationsMade){
+            reservationsLists.push(reservationItem.linkId)
+        }
+
+        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
+        
+        res.render('ViewReservations.ejs', {
+            timeSlots: slots,
+            left: itemsLeft,
+            reservations: reservationsMade
+        })
+    }catch(error){
+        console.log(error)
+    }
+}
