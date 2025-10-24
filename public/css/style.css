@@ -22,6 +22,16 @@
   clear: both;
 }
 
+.reset-a,
+.reset-a:hover,
+.reset-a:visited,
+.reset-a:focus,
+.reset-a:active {
+  text-decoration: none;
+  color: inherit;
+  outline: 0;
+}
+
 /******************************************
 /* BASE STYLES
 /*******************************************/
@@ -60,6 +70,21 @@ header {
   padding: 2rem 1rem;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+
 /******************************************
 /* CALENDAR STYLES
 /*******************************************/
@@ -67,17 +92,18 @@ header {
 .calendarContainer {
   margin: 2rem;
 }
-h1.calendarTitle {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  background-color: transparent;
-}
 .calendarHeader {
   text-align: center;
 }
 .calendarBody {
   display: flex;
 }
+
+section.monthDays {
+  overflow: auto;
+  white-space: nowrap;
+}
+
 section.monthDays ul li {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -86,10 +112,15 @@ section.monthDays ul li {
   margin-right: 0.5rem;
   color: darkgray;
 }
-section.monthDays {
-  overflow: auto;
-  white-space: nowrap;
+section.monthNames ul li {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin-bottom: 2rem;
+  color: darkgray;
+  flex-grow: 1;
+  margin-right: 3rem;
 }
+
 section.monthDays a,
 section.monthNames a {
   text-decoration: none;
@@ -101,14 +132,7 @@ section.monthNames .active a {
   font-size: medium;
   color: black;
 }
-section.monthNames ul li {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  margin-bottom: 2rem;
-  color: darkgray;
-  flex-grow: 1;
-  margin-right: 3rem;
-}
+
 section.individualDateContainer {
   display: flex;
   padding: 0;
@@ -140,13 +164,7 @@ section.weekDayContainer p + p {
 /*******************************************/
 
 .setDateContainer header {
-  background-color: #ffc366;
-}
-.setDateContainer h1 {
-  font-variant: small-caps;
-  font-size: 1.5rem;
-  margin: 0;
-  /* background-color: #add5b8; */
+  background-color: #add5b8;
 }
 
 .setDateContainer section {
@@ -168,7 +186,6 @@ section.weekDayContainer p + p {
   background-color: #add5b8;
   padding: 1rem;
   border-radius: 10px;
-  /* border: 3px solid #6d6663; */
 }
 
 .setDateContainer h3 {
@@ -176,16 +193,15 @@ section.weekDayContainer p + p {
   margin-bottom: 1.5rem;
   font-variant: small-caps;
   font-size: 1.3rem;
-  /* color: #faf3ea; */
-  background-color: #add5b8;
+  background-color: #ffc366;
   padding: 10px 10px;
   border-radius: 5px;
 }
+.datesSelection h3 {
+  background-color: transparent;
+}
 .setDateContainer .subFields {
   margin-bottom: 1.5rem;
-  /* padding: 1rem 1rem; */
-  /* border: 1px solid black; */
-  /* border-radius: 5px; */
 }
 
 .setDateContainer label {
@@ -200,28 +216,21 @@ section.weekDayContainer p + p {
 .setDateContainer input[type="button"],
 .setDateContainer input[type="submit"] {
   margin: 1rem 0;
-  /* padding: 10px 20px; */
   border: none;
-  /* border-radius: 5px; */
-  /* width: 100%; */
 }
 .setDateContainer input[type="button"] {
   background-color: #ffc366;
   border: 1px solid #332925;
-  /* color: white; */
-  /* font-weight: bold; */
 }
 .setDateContainer input[type="submit"] {
   background-color: #54c351;
   color: white;
-  /* font-weight: bold; */
 }
 .setDateContainer input[type="text"],
 .setDateContainer input[type="date"],
 .setDateContainer input[type="datetime-local"],
 .setDateContainer select {
   border: 0;
-  /* border-bottom: 1px solid rgb(163, 163, 163); */
   background-color: rgb(255, 252, 249);
   border-radius: 5px;
   padding: 10px 5px;
@@ -236,15 +245,27 @@ section.weekDayContainer p + p {
   padding: 0;
 }
 
+/*---------------------------------*/
+/*                table         */
+/*---------------------------------*/
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+td,
+th {
+  border: 1px solid black;
+  padding: 0.5em 0.5em;
+}
+th {
+  text-align: left;
+}
+
 /*-------------------------------------*/
 /*-----------------dates---------------*/
 /*-------------------------------------*/
-ul {
-  list-style: none;
-  padding: 0;
-}
 
-.dayContainer,
+/* .dayContainer,
 .timeSlots,
 .monthContainer {
   border: 1px solid black;
@@ -256,6 +277,7 @@ ul {
   margin: 1rem auto;
 }
 
+
 .timeSlots {
   margin: 0.3em;
   padding: 0.2em;
@@ -264,39 +286,16 @@ ul {
 .dayContainer {
   display: inline-block;
   margin: 0.4em;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-td,
-th {
-  border: 1px solid black;
-  padding: 0.5em 0.5em;
-}
-th {
-  /* text-transform: uppercase; */
-  text-align: left;
-}
+} */
 
 /******************************************
 /* Signin Page
 /*******************************************/
 
-.signin {
-  margin: 1em auto;
-  width: 50%;
-}
-
 .logon {
-  border: 5px solid rgb(219, 219, 219);
-  border-radius: 5px;
-}
-
-.login-form {
   padding: 2rem;
 }
+
 .login-form div {
   display: flex;
   flex-direction: column;
@@ -318,12 +317,10 @@ th {
   border: 1px solid rgb(224, 224, 224);
   border-radius: 5px;
   margin: 0.4rem;
+  padding: 5px;
 }
 .signin section {
   text-align: center;
-}
-.signin h1 {
-  background-color: transparent;
 }
 .signin input[type="submit"] {
   width: 100%;
@@ -381,9 +378,7 @@ th {
   justify-content: center;
 }
 .timesGrid button {
-  /* font-size: 1rem; */
   width: 100%;
-  /* padding: 1rem 0; */
   margin-top: 2rem;
 }
 .timesGrid fieldset {
@@ -407,66 +402,38 @@ th {
 .timeslots input[type="radio"] {
   margin-right: 5px;
   width: 1.4em;
+  border: 2px solid transparent;
 }
 .timeslots:has(> input[type="radio"]:checked) {
   background-color: #0069d9;
   color: white;
-  border: 2px solid transparent;
 }
 .timeslots:has(> input[type="radio"][disabled]) {
   background-color: #e6e6e6;
-  border: 2px solid transparent;
   text-decoration: line-through;
 }
 
-.reset-a,
-.reset-a:hover,
-.reset-a:visited,
-.reset-a:focus,
-.reset-a:active {
-  text-decoration: none;
-  color: inherit;
-  outline: 0;
-}
-
+/* footer */
 .appointmentInformation {
   margin-top: 2rem;
-  padding: 1.2rem 2rem;
+  padding: 2rem 1rem;
   border-top: 1px solid #332925;
   background-color: #ffc366;
   border-radius: 0 0 18px 18px;
-  color: #332925;
-}
-.appointmentInformation h2 {
-  color: black;
-}
-.appointmentInformation p {
-  margin: 0.5em;
 }
 
 /* ------------------------------ */
 /* Booking Page Styles */
 /* ------------------------------ */
 
-.bookHeaderContainer {
-  /* padding: 1rem 2rem; */
+.bookHeaderContainer,
+.header {
   background-color: #add5b8;
   border-bottom: 1px solid #332925;
-  /* border-radius: 18px 18px 0 0; */
 }
 
 .header {
   text-align: center;
-  background-color: #add5b8;
-  border-bottom: 1px solid #332925;
-  /* border-radius: 18px 18px 0 0; */
-  /* padding: 2rem; */
-}
-.header h1 {
-  font-size: 1.8rem;
-  line-height: 1.8rem;
-  color: #2a2f2c;
-  margin: 0;
 }
 .header i {
   font-size: 3rem;
@@ -475,7 +442,6 @@ th {
   font-weight: bold;
   font-size: 1.8rem;
   color: #faf3ea;
-  margin: 1rem 0 0 0;
 }
 
 .body {
@@ -487,16 +453,9 @@ th {
   background-color: #fefaf0;
   border-radius: 0 0 18px 18px;
 }
-.body p {
-  margin: 0;
-}
+
 .body button {
-  /* padding: 0.8rem 1.5rem; */
   background-color: #ffc366;
-  /* border: 1px solid #6d6663; */
-  /* border-radius: 5px; */
-  /* color: #2a2f2c; */
-  /* font-weight: bold; */
 }
 .body .mensaje {
   color: gray;
