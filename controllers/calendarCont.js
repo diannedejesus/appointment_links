@@ -43,8 +43,8 @@ export async function getIndex (req,res){
     }
 
     res.render('calendarIndex.ejs', {
-        datenum: req.query.datenum, 
-        datemonth: req.query.datemonth,
+        datenum: req.query.datenum ?? (new Date()).getDay(), 
+        datemonth: req.query.datemonth ?? (new Date()).getMonth(),
         reservationList: reservationList
     }) 
 }
