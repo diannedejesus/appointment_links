@@ -1,4 +1,4 @@
-import TimeSlotDB from '../models/TimeSlots.js'
+ import TimeSlotDB from '../models/TimeSlots.js'
 import ReservedSlotDB from '../models/Reservations.js'
 import DatesDB from '../models/Dates.js'
 import * as nanoid from 'nanoid'
@@ -19,9 +19,20 @@ export async function selectTimeSlots (req,res) {
 
         const reservation = await ReservedSlotDB.find(currentLink)
         const timeSlots = await TimeSlotDB.find(currentLink)
-        const reservedSlots = await TimeSlotDB.find().select('selectedSlot')   
-        const isFilled = timeSlots[0].selectedSlot ? true : false
+        
+        const reservationsLists = []
+        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+        for(let reservationItem of reservationsMade){
+            reservationsLists.push(reservationItem.linkId)
+        }
 
+        const reservedSlots = await TimeSlotDB.find({linkId: {$in: reservationsLists},
+            selectedSlot: { $ne : null }}).select('selectedSlot')
+        for(let slots of reservedSlots){
+            unavailableSlots.push(`${slots.selectedSlot}`)
+        }
+        
+        const isFilled = timeSlots[0].selectedSlot ? true : false
         if(isFilled){
             availableSlots.push(timeSlots[0].selectedSlot)
         }else{
@@ -29,12 +40,6 @@ export async function selectTimeSlots (req,res) {
         }
 
         availableSlots = availableSlots.sort()
-
-        for(let slots of reservedSlots){
-            if(slots.selectedSlot){
-                unavailableSlots.push(`${slots.selectedSlot}`)
-            }
-        }
 
         res.render('selectTimeSlot.ejs', {
             reservationInfo: reservation,
