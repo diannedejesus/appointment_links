@@ -4,55 +4,6 @@ import DatesDB from '../models/Dates.js'
 import * as nanoid from 'nanoid'
 
 
-
-
-export async function selectTimeSlots (req,res) {  
-    try{
-        let availableSlots = []
-        let unavailableSlots = []
-        let currentLink = {}
-
-        if(req.params.id){
-            currentLink = {linkId: req.params.id}
-        }
-        //else return error
-
-        const reservation = await ReservedSlotDB.find(currentLink)
-        const timeSlots = await TimeSlotDB.find(currentLink)
-        
-        const reservationsLists = []
-        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
-        for(let reservationItem of reservationsMade){
-            reservationsLists.push(reservationItem.linkId)
-        }
-
-        const reservedSlots = await TimeSlotDB.find({linkId: {$in: reservationsLists},
-            selectedSlot: { $ne : null }}).select('selectedSlot')
-        for(let slots of reservedSlots){
-            unavailableSlots.push(`${slots.selectedSlot}`)
-        }
-        
-        const isFilled = timeSlots[0].selectedSlot ? true : false
-        if(isFilled){
-            availableSlots.push(timeSlots[0].selectedSlot)
-        }else{
-            availableSlots = timeSlots[0].slotChoices
-        }
-
-        availableSlots = availableSlots.sort()
-
-        res.render('selectTimeSlot.ejs', {
-            reservationInfo: reservation,
-            isFilled: isFilled,
-            timeSlots: availableSlots,
-            reserved: unavailableSlots,
-            selectedDay: req.query.selectedDate
-        })
-    }catch(err){
-        console.log(err)
-    }
-}
-
 export async function sendEmail (req, res){ //uses ews
 
     try{
@@ -94,8 +45,6 @@ export async function createTimeSlot (req, res){
             linkId: linkId,
         })
 
-        console.log(req.body.dateTimeItem)  //validate
-
         await TimeSlotDB.create({
             slotChoices: req.body.dateTimeItem,
             linkId: linkId,
@@ -130,7 +79,7 @@ export async function createTimeSlot (req, res){
         }
         
         req.body.idFromJSFile = linkId
-        //resendEmail(req)
+        //sendEmail(req)
 
         console.log('Time slots were created')
         res.redirect('/setDates')
@@ -141,13 +90,16 @@ export async function createTimeSlot (req, res){
 
 export async function assignTimeSlot (req, res){ //uses ews
     try{
-        await TimeSlotDB.findOneAndUpdate({linkId: req.body.timeslot[1]},{
+        await TimeSlotDB.findOneAndUpdate({
+            linkId: req.body.timeslot[1]
+        },
+        {
             selectedSlot: new Date(req.body.timeslot[0]),
         })
 
         const reservationData = await ReservedSlotDB.findOne({linkId: req.body.timeslot[1]})
         let durationTime = reservationData.duration
-        const endDate = new Date(req.body.timeslot[0]).getTime() + (Number(durationTime) * 60000) //TODO use the duration but first set a standard for definition
+        const endDate = new Date(req.body.timeslot[0]).getTime() + (Number(durationTime) * 60000) 
 
         const options = {
             'Name': reservationData.name,
@@ -216,6 +168,8 @@ export async function deleteTimeSlot (req, res){
 }
 
 
+
+
 export async function show_reservations (req,res){
     try{
         const reservationsLists = []
@@ -263,5 +217,52 @@ export async function show_setDates (req,res){
         })
     }catch(error){
         console.log(error)
+    }
+}
+
+export async function selectTimeSlots (req,res) {  
+    try{
+        let availableSlots = []
+        let unavailableSlots = []
+        let currentLink = {}
+
+        if(req.params.id){
+            currentLink = {linkId: req.params.id}
+        }
+        //else return error
+
+        const reservation = await ReservedSlotDB.find(currentLink)
+        const timeSlots = await TimeSlotDB.find(currentLink)
+        
+        const reservationsLists = []
+        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+        for(let reservationItem of reservationsMade){
+            reservationsLists.push(reservationItem.linkId)
+        }
+
+        const reservedSlots = await TimeSlotDB.find({linkId: {$in: reservationsLists},
+            selectedSlot: { $ne : null }}).select('selectedSlot')
+        for(let slots of reservedSlots){
+            unavailableSlots.push(`${slots.selectedSlot}`)
+        }
+        
+        const isFilled = timeSlots[0].selectedSlot ? true : false
+        if(isFilled){
+            availableSlots.push(timeSlots[0].selectedSlot)
+        }else{
+            availableSlots = timeSlots[0].slotChoices
+        }
+
+        availableSlots = availableSlots.sort()
+
+        res.render('selectTimeSlot.ejs', {
+            reservationInfo: reservation,
+            isFilled: isFilled,
+            timeSlots: availableSlots,
+            reserved: unavailableSlots,
+            selectedDay: req.query.selectedDate
+        })
+    }catch(err){
+        console.log(err)
     }
 }
