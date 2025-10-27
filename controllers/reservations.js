@@ -1,4 +1,4 @@
- import TimeSlotDB from '../models/TimeSlots.js'
+import TimeSlotDB from '../models/TimeSlots.js'
 import ReservedSlotDB from '../models/Reservations.js'
 import DatesDB from '../models/Dates.js'
 import * as nanoid from 'nanoid'
@@ -46,37 +46,38 @@ export async function createTimeSlot (req, res){
         })
 
         await TimeSlotDB.create({
+            owner: req.user.email,
             slotChoices: req.body.dateTimeItem,
             linkId: linkId,
         })
 
-        if(!Array.isArray(req.body.dateTimeItem)){
-            const createdDate = await DatesDB.findOne({ dateTime: req.body.dateTimeItem })
+        // if(!Array.isArray(req.body.dateTimeItem)){
+        //     const createdDate = await DatesDB.findOne({ dateTime: req.body.dateTimeItem })
 
-            if(createdDate){
-                await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
-            }else{
-                await DatesDB.create({
-                    dateTime: req.body.dateTimeItem,
-                    references: [linkId],
-                    reserved: false
-                })
-            }
-        }else{
-            for(let dateTime of req.body.dateTimeItem){
-                const createdDate = await DatesDB.findOne({ dateTime: dateTime })
+        //     if(createdDate){
+        //         await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
+        //     }else{
+        //         await DatesDB.create({
+        //             dateTime: req.body.dateTimeItem,
+        //             references: [linkId],
+        //             reserved: false
+        //         })
+        //     }
+        // }else{
+        //     for(let dateTime of req.body.dateTimeItem){
+        //         const createdDate = await DatesDB.findOne({ dateTime: dateTime })
 
-                if(createdDate){
-                    await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
-                }else{
-                    await DatesDB.create({
-                        dateTime: dateTime,
-                        references: [linkId],
-                        reserved: false
-                    })
-                }
-            }
-        }
+        //         if(createdDate){
+        //             await DatesDB.updateOne({_id: createdDate.id}, { $push: {references: linkId}})
+        //         }else{
+        //             await DatesDB.create({
+        //                 dateTime: dateTime,
+        //                 references: [linkId],
+        //                 reserved: false
+        //             })
+        //         }
+        //     }
+        // }
         
         req.body.idFromJSFile = linkId
         //sendEmail(req)
@@ -144,18 +145,18 @@ export async function deleteTimeSlot (req, res){
     try{
         const timeSlot = await TimeSlotDB.findOne({linkId:req.body.todoIdFromJSFile})
 
-        for(let currentDateTime of timeSlot.slotChoices){
-            await DatesDB.updateOne(
-                {dateTime: currentDateTime}, 
-                {$pull: {references: req.body.todoIdFromJSFile}}
-            )
+        // for(let currentDateTime of timeSlot.slotChoices){
+        //     await DatesDB.updateOne(
+        //         {dateTime: currentDateTime}, 
+        //         {$pull: {references: req.body.todoIdFromJSFile}}
+        //     )
 
-            const verifyItem = await DatesDB.findOne({dateTime: currentDateTime})
+        //     const verifyItem = await DatesDB.findOne({dateTime: currentDateTime})
 
-            if(verifyItem.references.length === 0){
-                await DatesDB.findOneAndDelete({dateTime: currentDateTime})
-            }
-        }
+        //     if(verifyItem.references.length === 0){
+        //         await DatesDB.findOneAndDelete({dateTime: currentDateTime})
+        //     }
+        // }
         
         await TimeSlotDB.findOneAndDelete({linkId:req.body.todoIdFromJSFile})
         await ReservedSlotDB.findOneAndDelete({linkId:req.body.todoIdFromJSFile})
@@ -172,16 +173,11 @@ export async function deleteTimeSlot (req, res){
 
 export async function show_reservations (req,res){
     try{
-        const reservationsLists = []
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+        const slots = await TimeSlotDB.find({owner: req.user.email})
 
-        for(let reservationItem of reservationsMade){
-            reservationsLists.push(reservationItem.linkId)
-        }
-
-        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
         const itemsLeft = await TimeSlotDB.countDocuments({
-            linkId: {$in: reservationsLists}, 
+            owner: req.user.email, 
             selectedSlot: ''
         })
         
@@ -197,16 +193,10 @@ export async function show_reservations (req,res){
 
 export async function show_setDates (req,res){
     try{
-        const reservationsLists = []
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
-
-        for(let reservationItem of reservationsMade){
-            reservationsLists.push(reservationItem.linkId)
-        }
-
-        const slots = await TimeSlotDB.find({linkId: {$in: reservationsLists}})
+        const slots = await TimeSlotDB.find({owner: req.user.email})
         const itemsLeft = await TimeSlotDB.countDocuments({
-            linkId: {$in: reservationsLists}, 
+            owner: req.user.email, 
             selectedSlot: ''
         })
         
@@ -234,13 +224,7 @@ export async function selectTimeSlots (req,res) {
         const reservation = await ReservedSlotDB.find(currentLink)
         const timeSlots = await TimeSlotDB.find(currentLink)
         
-        const reservationsLists = []
-        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
-        for(let reservationItem of reservationsMade){
-            reservationsLists.push(reservationItem.linkId)
-        }
-
-        const reservedSlots = await TimeSlotDB.find({linkId: {$in: reservationsLists},
+        const reservedSlots = await TimeSlotDB.find({owner: req.user.email,
             selectedSlot: { $ne : null }}).select('selectedSlot')
         for(let slots of reservedSlots){
             unavailableSlots.push(`${slots.selectedSlot}`)
