@@ -104,7 +104,7 @@ export async function assignTimeSlot (req, res){ //uses ews
         //ewsOptions.sendEmail(req.user.calendarPassword, req.user.calendarEmail, optionsEmailUser)
 
         console.log('Time Slot Selected')
-        res.json('Time Slot Selected')
+        res.redirect(req.get('referer'))
     }catch(err){
         console.log(err)
     }
