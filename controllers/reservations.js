@@ -3,28 +3,6 @@ import ReservedSlotDB from '../models/Reservations.js'
 import * as nanoid from 'nanoid'
 
 
-export async function sendEmail (req, res){ //uses ews
-
-    try{
-        const reservationData = await ReservedSlotDB.findOne({linkId: req.body.idFromJSFile})
-        //let durationTime = reservationData.duration
-
-        const optionsEmailClient = {
-            'Name': reservationData.name,
-            'Body': `Hello ${reservationData.name},\n\nOur office needs to meet with you to complete some documentation or discuss a topic pertinate to your case. Please use the following link to schedule your appointment. \n\nIf none of these times/dates work with your schedule then please email or call us so we can find a time that works. \n\nWe will be discussing: ${reservationData.subject} and we estimate the meeting will be ${reservationData.duration}\n\n http://localhost:3000/setDates/selectTimeSlot/${reservationData.linkId}\n\n`, //Body: name email
-            'Email': reservationData.email,
-            'Subject': 'We need you to schedule an appointment',
-        }
-
-        ewsOptions.sendEmail(req.user.calendarPassword, req.user.calendarEmail, optionsEmailClient)
-
-        console.log('Email Sent')
-        res.json('Email Sent')
-    }catch(err){
-        console.log(err)
-    }
-}
-
 export async function createTimeSlot (req, res){
     try{
         const linkId = nanoid.nanoid()
