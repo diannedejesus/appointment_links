@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import ews, { DateTime, EmailMessage } from 'ews-javascript-api';
+import ews, { BodyType, DateTime, EmailMessage } from 'ews-javascript-api';
 var exch = new ews.ExchangeService(ews.ExchangeVersion.Exchange2016);
   exch.Url = new ews.Uri("https://east.exch032.serverdata.net/ews/exchange.asmx");
 
@@ -30,9 +30,9 @@ export async function sendEmail(recipient) {
   exch.Credentials = new ews.WebCredentials(process.env.exchangeUser, process.env.exchangePass);
 
   var msg = new EmailMessage(exch);
-  msg.Subject = 'Test Email';
-  msg.Body = new ews.MessageBody("This is a test email sent using the ews-js-api");
-  msg.ToRecipients.Add(recipient)
+  msg.Subject = recipient.subject;
+  msg.Body = new ews.MessageBody(BodyType.Text, `${recipient.body} \r\n\r\n`);
+  msg.ToRecipients.Add(recipient.recipient)
             //msg.CcRecipients
             //msg.IsDeliveryReceiptRequested
               

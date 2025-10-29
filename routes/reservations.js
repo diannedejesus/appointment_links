@@ -9,7 +9,7 @@ router.get('/reservations', ensureAuth, bookingController.show_reservations)
 router.get('/selectTimeSlot/:id', bookingController.selectTimeSlots)
 
 router.post('/createTimeSlot', ensureAuth, bookingController.createTimeSlot)
-router.post('/sendEmail', ensureAuth, bookingController.sendEmail)
+//router.post('/sendEmail', ensureAuth, bookingController.sendEmail)
 
 router.post('/assignTimeSlot', bookingController.assignTimeSlot)
 

@@ -1,6 +1,7 @@
 import TimeSlotDB from '../models/TimeSlots.js'
 import ReservedSlotDB from '../models/Reservations.js'
 import * as nanoid from 'nanoid'
+import * as ExchangeHandler from '../ewsConnections.js'
 
 
 export async function createTimeSlot (req, res){
@@ -28,8 +29,14 @@ export async function createTimeSlot (req, res){
             linkId: linkId,
         })
         
-        req.body.idFromJSFile = linkId
+        const emailContent = {
+            subject: 'Cita Programado',
+            body: req.body.subjectItem,
+            recipient: req.body.emailItem,
+        }
+        //req.body.idFromJSFile = linkId
         //sendEmail(req)
+        ExchangeHandler.sendEmail(emailContent);
 
         console.log('Time slots were created')
         res.redirect('/setDates')
