@@ -31,7 +31,7 @@ export async function sendEmail(recipient) {
 
   var msg = new EmailMessage(exch);
   msg.Subject = recipient.subject;
-  msg.Body = new ews.MessageBody(BodyType.Text, `${recipient.body} \r\n\r\n`);
+  msg.Body = new ews.MessageBody(BodyType.HTML, recipient.body);
   msg.ToRecipients.Add(recipient.recipient)
             //msg.CcRecipients
             //msg.IsDeliveryReceiptRequested

@@ -28,15 +28,20 @@ export async function createTimeSlot (req, res){
             slotChoices: req.body.dateTimeItem,
             linkId: linkId,
         })
+
+        let emailBody = `Proposito: ${req.body.subjectItem} &lt;br&gt;
+                    Ubicación: ${req.body.locationItem} &lt;br&gt;
+                    Citado por: ${req.user.email} &lt;br&gt;
+                    Horario: &lt;a href='#'&gt${linkId}&lt;/a&gt &lt;br&gt;
+                    Duración: ~${duration} minutos `
         
         const emailContent = {
             subject: 'Cita Programado',
-            body: req.body.subjectItem,
+            body: emailBody,
             recipient: req.body.emailItem,
         }
-        //req.body.idFromJSFile = linkId
-        //sendEmail(req)
-        ExchangeHandler.sendEmail(emailContent);
+
+        ExchangeHandler.sendEmail(emailContent)
 
         console.log('Time slots were created')
         res.redirect('/setDates')

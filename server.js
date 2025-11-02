@@ -50,6 +50,6 @@ app.use('/calendar', calendarRoutes)
 app.listen(process.env.PORT, ()=>{
     console.log(`Server is running on PORT: ${process.env.PORT} , you better catch it!`)
     //ewsTest.addCalendarEvent();
-    //ewsTest.sendEmail('djs.dianne@gmail.com');
+    //ewsTest.sendEmail(emailContent);
     //oldEwsTest();
 })
