@@ -1,0 +1,29 @@
+    
+    <main class="bookDate">
+        <% const currentTimeSlot = new Date(timeSlots) %>
+        <header class="header">
+            <i class="fa-regular fa-calendar-check"></i>
+            <h1>Cita Programado</h1>
+            <h2><%= reservationInfo[0].name %></h2>
+        </header>
+        <section class="body">
+            <p class="topic">Tema: <%= reservationInfo[0].subject %> topic that needs to be done in person (con <%= reservationInfo[0].owner %>)</p>
+
+            <section class="dateContainer">
+                <p>
+                    <b><%= new Date(currentTimeSlot).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %></b> -- 
+                    <%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>
+                    <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %>
+                    <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %>
+                </p>
+                <!-- 
+                    <p><%= currentTimeSlot.toLocaleString('es-US', { weekday: 'short'}) %>, <%= currentTimeSlot.toLocaleString('es-US', { day: "numeric" }) %> de <%= currentTimeSlot.toLocaleString('es-US', { month: 'short' }) %> de <%= currentTimeSlot.toLocaleString('es-US', { year: "numeric" }) %></p>
+                    <p><%= currentTimeSlot.toLocaleString('es-US', { timeStyle: 'short' }) %> hasta <%= new Date(currentTimeSlot.getTime() + reservationInfo[0].duration*60000).toLocaleString('es-ES', {timeStyle: 'short'}) %><%= currentTimeSlot.toLocaleString('es-ES', {hour: 'numeric', hour12: false}) > 12 ? 'pm' : 'am'  %></p> 
+                -->
+            </section>
+
+            <p class="mensaje">Gracias, su cita ha sido programado con exito.</p>
+
+            <button class="button">Cambiar o Cancelar Cita</button>
+        </section>
+   </main>

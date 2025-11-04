@@ -245,22 +245,6 @@ section.weekDayContainer p + p {
   padding: 0;
 }
 
-/*---------------------------------*/
-/*                table         */
-/*---------------------------------*/
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-td,
-th {
-  border: 1px solid black;
-  padding: 0.5em 0.5em;
-}
-th {
-  text-align: left;
-}
-
 /*-------------------------------------*/
 /*-----------------dates---------------*/
 /*-------------------------------------*/
@@ -472,6 +456,7 @@ th {
 
 nav {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 nav ul {
@@ -495,6 +480,38 @@ nav p {
 main.reservationsList {
   max-width: max-content;
 }
-.reservationsList section {
+.reservationsList .wrapper {
   padding: 2rem;
+}
+
+/******************************************
+/* Reservations Table
+/*******************************************/
+.tableMenu ul li {
+  display: inline;
+}
+.tableMenu ul {
+  text-align: right;
+  margin: 0;
+}
+.reservationsTable {
+  border: 1px solid black;
+  padding: 1rem;
+  width: 45em;
+}
+
+/*---------------------------------*/
+/*                table         */
+/*---------------------------------*/
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+td,
+th {
+  border: 1px solid black;
+  padding: 0.5em 0.5em;
+}
+th {
+  text-align: left;
 }

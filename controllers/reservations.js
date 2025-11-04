@@ -194,3 +194,54 @@ export async function selectTimeSlots (req,res) {
         console.log(err)
     }
 }
+
+export async function selectOrShowTimeSlots (req,res) {  
+    try{
+        let availableSlots = []
+        let unavailableSlots = []
+        let currentLink = {}
+        if(req.params.id){
+            currentLink = {linkId: req.params.id}
+        }
+        //else return error
+
+        const reservation = await ReservedSlotDB.find(currentLink)
+        const timeSlots = await TimeSlotDB.find(currentLink)
+
+        const reservedSlots = await TimeSlotDB.find({owner: reservation.owner,
+            selectedSlot: { $ne : null }}).select('selectedSlot')
+        for(let slots of reservedSlots){
+            unavailableSlots.push(`${slots.selectedSlot}`)
+        }
+        
+        const isFilled = timeSlots[0].selectedSlot ? true : false
+        if(isFilled){
+            availableSlots.push(timeSlots[0].selectedSlot)
+        }else{
+            availableSlots = timeSlots[0].slotChoices
+        }
+
+        availableSlots = availableSlots.sort()
+
+        if(isFilled){
+            res.render('ViewDateTime.ejs', {
+                reservationInfo: reservation,
+                timeSlots: availableSlots,
+                reserved: unavailableSlots,
+                isLoggedIn: req.user ? "true" : "false",
+                selectedDay: req.query.selectedDate
+            })
+        }else{
+            res.render('SelectDateTime.ejs', {
+                reservationInfo: reservation,
+                timeSlots: availableSlots,
+                isLoggedIn: req.user ? "true" : "false",
+                reserved: unavailableSlots,
+                selectedDay: req.query.selectedDate
+            })
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
+

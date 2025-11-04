@@ -14,47 +14,57 @@
         <header class="bookHeaderContainer">
             <h1>Reservaciones</h1>
         </header>
-
-        <section>
-            <h2>Unreserved Dates: <%= left %></h2>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <!-- <th>email</th> -->
-                    <!-- <th>location</th> -->
-                    <th>Subject</th>
-                    <th>Duration</th>
-                    <th>Link</th>
-                    <th>Status</th>
-                    <th>Resend</th>
-                    <th>Remove</th>
-                </tr>
-                <% reservations.forEach( (el) => { %>
-                <tr>
-                    <td><%= el.name %></td>
-                    <!-- <td><%= el.email %></td> -->
-                    <!-- <td><%= el.location %></td> -->
-                    <td><%= el.subject %></td>
-                    <td><% if(el.duration <= 60){ %>
-                        <%= el.duration %> min
-                    <% }else{ %>
-                        <%= el.duration/60 %> hours
-                    <% } %>
-                    <td>
-                        <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
-                    </td>
-                    <td><% timeSlots.forEach( (ele) => { %>
-                        <% if (ele.linkId === el.linkId) { %> 
-                            <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
-                        <% } %>   
+        <div class="wrapper">
+            <section class="tableMenu">
+                <ul>
+                    <li><button>Delete</button></li>
+                    <li><button>Edit</button></li>
+                    <li><button>Send</button></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Unreserved Dates: <%= left %></h2>
+                <table>
+                    <tr>
+                        <!-- <th></th> -->
+                        <th>Name</th>
+                        <!-- <th>email</th> -->
+                        <!-- <th>location</th> -->
+                        <th>Subject</th>
+                        <th>Duration</th>
+                        <th>Link</th>
+                        <th>Status</th>
+                        <th>Email</th>
+                        <th>Remove</th>
+                    </tr>
+                    <% reservations.forEach( (el) => { %>
+                    <tr>
+                        <!-- <td><input type="checkbox" /></td> -->
+                        <td><%= el.name %></td>
+                        <!-- <td><%= el.email %></td> -->
+                        <!-- <td><%= el.location %></td> -->
+                        <td><%= el.subject %></td>
+                        <td><% if(el.duration <= 60){ %>
+                            <%= el.duration %> min
+                        <% }else{ %>
+                            <%= el.duration/60 %> hours
+                        <% } %>
+                        <td>
+                            <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
+                        </td>
+                        <td><% timeSlots.forEach( (ele) => { %>
+                            <% if (ele.linkId === el.linkId) { %> 
+                                <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
+                            <% } %>   
+                        <% }) %>
+                        </td>
+                        <td data-id='<%= el.linkId %>'><a class='sendMail'>Send</a></td>
+                        <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
+                    </tr>
                     <% }) %>
-                    </td>
-                    <td data-id='<%= el.linkId %>'><a class='sendMail'>Send Email</a></td>
-                    <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
-                </tr>
-                <% }) %>
-            </table>
-        </section>
+                </table>
+            </section>
+        </div>
     </main>
      
     <script src="../js/main.js"></script>

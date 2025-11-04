@@ -8,6 +8,8 @@ router.get('/reservations', ensureAuth, bookingController.show_reservations)
 //router.get('/selectTimeSlot', bookingController.selectTimeSlots)
 router.get('/selectTimeSlot/:id', bookingController.selectTimeSlots)
 
+router.get('/selectDateTime/:id', bookingController.selectOrShowTimeSlots)
+
 router.post('/createTimeSlot', ensureAuth, bookingController.createTimeSlot)
 //router.post('/sendEmail', ensureAuth, bookingController.sendEmail)
 

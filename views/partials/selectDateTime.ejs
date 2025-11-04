@@ -1,0 +1,62 @@
+   
+    <main class="bookDate"> 
+        <header class="bookHeaderContainer">
+            <h1>Reservar Fecha</h1>
+            <p>Hola, <strong><%= reservationInfo[0].name %></strong> (<%= reservationInfo[0].email %>), selecione un horario para su cita.</p>
+        </header>           
+        
+        <section class="dateSliderContainer">  
+            <% const dateAdded = [] %>
+            <% const selectedDate = new Date(selectedDay ?? timeSlots[0])  %>
+
+            <h2><%= selectedDate.toLocaleString('es-US', { month: 'long'}) %></h2>
+            <ul id="dateSlider" class="dateSlider">
+                <% timeSlots.forEach( (timeSlot,i) => { %>
+                    <% const currentDate = new Date(timeSlot) %>
+                    <% const weekNumber = currentDate.toLocaleString('es-US', { day: 'numeric'}) %>
+                    <% const weekDay= currentDate.toLocaleString('es-US', { weekday: 'short'}) %>
+                    <% if(!dateAdded.includes(weekNumber + ' ' + weekDay)){%>
+                        <% dateAdded.push(weekNumber + ' ' + weekDay) %>
+                        <% if(+currentDate === +selectedDate) { %> 
+                            <li class="selected">
+                                <p><%= weekNumber %></p>
+                                <p><%= weekDay %></p></a>
+                            </li>
+                        <% } else { %> 
+                            <li>
+                                <a href="?selectedDate=<%= currentDate %>" class="reset-a">
+                                    <p><%= weekNumber %></p>
+                                    <p><%= weekDay %></p>
+                                </a>
+                            </li>                            
+                        <% } %> 
+                    <%}%>
+                <% }) %> 
+            </ul>
+        </section>
+
+        <section class="timesGrid">
+            <form action="../assignTimeSlot" method="POST">
+                <fieldset>
+                    <% timeSlots.forEach( (timeSlot,i) => { %>
+                        <% const currentDate = new Date(timeSlot).toLocaleString('es-US', { day: 'numeric'},{ month: 'short'}) %>
+                        <% const selectedMonthDay = selectedDate.toLocaleString('es-US', { day: 'numeric'},{ month: 'short'}) %>
+
+                        <% if(+currentDate === +selectedMonthDay){%>
+                            <div class="timeslots">
+                                <input type="radio" <%= reserved.includes(`${new Date(timeSlot)}`) ? 'disabled' : '' %> id="timeslot<%= i %>" name="timeslot" data-id='<%= reservationInfo[0].linkId %>' value="<%= new Date(timeSlot) %>" />
+                                <label for="timeslot<%= i %>"><%= new Date(timeSlot).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %></label>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                    <input type="hidden" id="linkId" name="timeslot" value="<%= reservationInfo[0].linkId %>" />
+                </fieldset>
+                <button class="button">Select</button>
+            </form>
+        </section>
+
+        <section class="appointmentInformation">
+            <h2>Proposito de su Cita</h2>
+            <p><%= reservationInfo[0].subject %>. Tomara <%= reservationInfo[0].duration %> minutos con <%= reservationInfo[0].owner %> en <%= reservationInfo[0].location %></p>
+        </section>
+   </main> 
