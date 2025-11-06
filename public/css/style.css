@@ -251,6 +251,14 @@ section.weekDayContainer p + p {
 .seeUsedDates {
   margin-left: 2rem;
 }
+.seeUsedDates a {
+  display: inline-block;
+  color: rgb(49, 49, 49);
+  padding-bottom: 0.5rem;
+}
+.seeUsedDates p {
+  margin-bottom: 0.5rem;
+}
 
 /******************************************
 /* Signin Page

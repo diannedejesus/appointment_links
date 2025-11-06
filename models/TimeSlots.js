@@ -10,7 +10,7 @@ const TimeSlotSchema = new mongoose.Schema({
     default: ''
   },
   slotChoices: {
-    type: Array,
+    type: [Date],
     required: true,
   },
   linkId: {

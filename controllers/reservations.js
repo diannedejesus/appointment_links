@@ -138,7 +138,10 @@ export async function show_reservations (req,res){
 export async function show_setDates (req,res){
     try{
         const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
-        const slots = await TimeSlotDB.find({owner: req.user.email})
+        const slots = await TimeSlotDB.find({
+            owner: req.user.email,
+            slotChoices: {$gt: new Date()}
+        })
         const itemsLeft = await TimeSlotDB.countDocuments({
             owner: req.user.email, 
             selectedSlot: ''
@@ -167,8 +170,13 @@ export async function selectOrShowTimeSlots (req,res) {
         const reservation = await ReservedSlotDB.find(currentLink)
         const timeSlots = await TimeSlotDB.find(currentLink)
 
-        const reservedSlots = await TimeSlotDB.find({owner: reservation.owner,
-            selectedSlot: { $ne : null }}).select('selectedSlot')
+        const reservedSlots = await TimeSlotDB.find({
+            owner: reservation.owner,
+            selectedSlot: { $ne : null },
+
+        })
+        .select('selectedSlot')
+
         for(let slots of reservedSlots){
             unavailableSlots.push(`${slots.selectedSlot}`)
         }
