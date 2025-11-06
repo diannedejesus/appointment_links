@@ -17,64 +17,85 @@
         
         <section>
             <form action="/setDates/createTimeSlot" method='POST'>
-                    <div class="subFields">
-                        <h3>Cliente</h3>
+                <div class="subFields">
+                    <h3>Cliente</h3>
 
-                        <label for='nameItem'>Nombre</label>
-                        <input type="text" placeholder="Fulano de Pueblo" id='nameItem' name='nameItem'>
+                    <label for='nameItem'>Nombre</label>
+                    <input type="text" placeholder="Fulano de Pueblo" id='nameItem' name='nameItem'>
 
-                        <label for='emailItem'>Correo Electronico</label>
-                        <input type="text" placeholder="correo@lugar.com" id='emailItem' name='emailItem'>
-                    </div>
+                    <label for='emailItem'>Correo Electronico</label>
+                    <input type="text" placeholder="correo@lugar.com" id='emailItem' name='emailItem'>
+                </div>
                     
-                    <div class="subFields">
-                        <h3 for='appointmentDates'>Información de la Cita</h3>
-                        <label for='subjectItem'>Sujeto</label>
-                        <input type="text" class="longTextInput" placeholder="Discusion de Caso" id='subjectItem' name='subjectItem'> 
-                    
-                        <label for='locationItem'>Lugar</label>
-                        <input type="text" class="longTextInput" placeholder="Salon de reunion primer piso" id='locationItem' name='locationItem'>
-                    
-                        <label for='durationItem'>Duración</label>
-                        <input type="text" class="shortTextInput" placeholder="20" id='durationItem' name='durationItem'>
-                    
-                        <select name='timeframeItem'>
-                            <option value='minutes'>minuto</option>
-                            <option value='hours'>hora</option>
-                        </select>
-                    </div>
-                    
-                    <div id='appointmentDates' class="subFields datesSelection">
-                        <h3 for='appointmentDates'>Selecione Hora y Día</h3>
-
-                        <label for='dateItem'>Fecha</label>
-                        <input type="date" id='dateItem' name='dateItem'>
-
-                        <label for="timeItem">Hora</label>
-                        <select id='hourItem' name='hourItem'>
-                            <option value="">--hora--</option>
-                            <option value="08">8</option>
-                            <option value="09">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="13">1</option>
-                            <option value="14">2</option>
-                            <option value="15">3</option>
-                        </select>
-
-                        <select id='minuteItem' name='minuteItem'>
-                            <option value="">--minuto--</option>
-                            <option value="30">30</option>
-                            <option value="00">00</option>
-                        </select>
-                        
-                        <input type="button" class='addDate button' value='Añadir'>
-                        
-                        <h3>Fechas para Citas</h3>
-                        <ul id='timeSlots'></ul>
-                    </div>
+                <div class="subFields">
+                    <h3 for='appointmentDates'>Información de la Cita</h3>
+                    <label for='subjectItem'>Sujeto</label>
+                    <input type="text" class="longTextInput" placeholder="Discusion de Caso" id='subjectItem' name='subjectItem'> 
                 
-                    <input type="submit" class="button">
+                    <label for='locationItem'>Lugar</label>
+                    <input type="text" class="longTextInput" placeholder="Salon de reunion primer piso" id='locationItem' name='locationItem'>
+                
+                    <label for='durationItem'>Duración</label>
+                    <input type="text" class="shortTextInput" placeholder="20" id='durationItem' name='durationItem'>
+                
+                    <select name='timeframeItem'>
+                        <option value='minutes'>minuto</option>
+                        <option value='hours'>hora</option>
+                    </select>
+                </div>
+                    
+                <div id='appointmentDates' class="subFields datesSelection">
+                    <h3 for='appointmentDates'>Selecione Hora y Día</h3>
+                    <div class="selectDateContainer">
+                        <div>
+                            <label for='dateItem'>Fecha</label>
+                            <input type="date" id='dateItem' name='dateItem'>
+
+                            <label for='timeItem'>Hora</label>
+                            <select id='hourItem' name='hourItem'>
+                                <option value="">--hora--</option>
+                                <option value="08">8</option>
+                                <option value="09">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="13">1</option>
+                                <option value="14">2</option>
+                                <option value="15">3</option>
+                            </select>
+
+                            <select id='minuteItem' name='minuteItem'>
+                                <option value="">--minuto--</option>
+                                <option value="30">30</option>
+                                <option value="00">00</option>
+                            </select>
+                        
+                            <input type="button" class='addDate button' value='Añadir'>
+                        
+                            <h3>Fechas para Citas</h3>
+                            <ul id='timeSlots'></ul>
+                        </div>
+                        <div class="seeUsedDates">
+                            <p>Used</p>
+                            <% timeSlots.forEach( (slot) => { %>
+                                <% if (slot.selectedSlot) { %>
+                                    <a href="../setDates/selectTimeSlot/<%= slot.linkId %>">
+                                        <%= slot.selectedSlot.toDateString() %>
+                                        <%= slot.selectedSlot.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %> 
+                                    </a><br />                              
+                                <% } else { %> 
+                                    <% slot.slotChoices.forEach((choice) => { %>
+                                        <a href="../setDates/selectTimeSlot/<%= slot.linkId %>">
+                                            <%= new Date(choice).toDateString() %>
+                                            <%= new Date(choice).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %>
+                                        </a><br />
+                                    <% }) %>
+                                <% } %>
+                            <% }) %>
+                            <br /> <br />
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="button">
             </form>
         </section>
     </main>

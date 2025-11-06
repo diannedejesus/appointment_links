@@ -244,33 +244,13 @@ section.weekDayContainer p + p {
   list-style: none;
   padding: 0;
 }
-
-/*-------------------------------------*/
-/*-----------------dates---------------*/
-/*-------------------------------------*/
-
-/* .dayContainer,
-.timeSlots,
-.monthContainer {
-  border: 1px solid black;
+/* --- */
+#appointmentDates div.selectDateContainer {
+  display: flex;
 }
-
-.monthContainer {
-  text-align: center;
-  width: 60%;
-  margin: 1rem auto;
+.seeUsedDates {
+  margin-left: 2rem;
 }
-
-
-.timeSlots {
-  margin: 0.3em;
-  padding: 0.2em;
-}
-
-.dayContainer {
-  display: inline-block;
-  margin: 0.4em;
-} */
 
 /******************************************
 /* Signin Page
