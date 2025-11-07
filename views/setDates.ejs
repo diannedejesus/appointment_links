@@ -79,13 +79,13 @@
                             <% timeSlots.forEach( (slot) => { %>
                                 <% if (slot.selectedSlot) { %>
                                     <a href="../setDates/selectTimeSlot/<%= slot.linkId %>">
-                                        <%= slot.selectedSlot.toDateString() %>
+                                        <%= slot.selectedSlot.toLocaleDateString("es-US", { day: "numeric"}) %>/<%= slot.selectedSlot.toLocaleString('es-US', { month: 'short' }) %>/<%= slot.selectedSlot.toLocaleString('es-US', { year: "numeric" }) %> - 
                                         <%= slot.selectedSlot.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %> 
                                     </a><br />                              
                                 <% } else { %> 
                                     <% slot.slotChoices.forEach((choice) => { %>
                                         <a href="../setDates/selectTimeSlot/<%= slot.linkId %>">
-                                            <%= new Date(choice).toDateString() %>
+                                            <%= new Date(choice).toLocaleDateString("es-US", { day: "numeric"}) %>/<%= new Date(choice).toLocaleString('es-US', { month: 'short' }) %>/<%= new Date(choice).toLocaleString('es-US', { year: "numeric" }) %> - 
                                             <%= new Date(choice).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %>
                                         </a><br />
                                     <% }) %>
