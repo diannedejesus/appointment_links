@@ -38,10 +38,11 @@
                         <th>Status</th>
                         <!-- <th>Email</th> -->
                         <!-- <th>Remove</th> -->
+                         <th>Time Slots</th>
                     </tr>
                     <% reservations.forEach( (el) => { %>
                     <tr>
-                        <td data-id='<%= el.linkId %>'><button class="option">#</button></td>
+                        <td data-id='<%= el.linkId %>'><button class="option">&nbsp;</button></td>
                         <td><%= el.name %></td>
                         <!-- <td><%= el.email %></td> -->
                         <!-- <td><%= el.location %></td> -->
@@ -54,11 +55,26 @@
                         <td>
                             <a href='../setDates/selectTimeSlot/<%= el.linkId %>'>Link</a>
                         </td>
-                        <td><% timeSlots.forEach( (ele) => { %>
-                            <% if (ele.linkId === el.linkId) { %> 
-                                <%= ele.selectedSlot ? 'Reserved' : 'Unreserved' %>
-                            <% } %>   
-                        <% }) %>
+                        <td>
+                            <% let currentReservationSlots = [] %>
+                            <% timeSlots.forEach( (ele) => { %>
+                                <% if (ele.linkId === el.linkId) { %> 
+                                    <% if (ele.selectedSlot) { %>
+                                        <% currentReservationSlots.push(ele.selectedSlot) %>
+                                        <%= 'Reserved' %>
+                                    <% } else { %>
+                                        <% currentReservationSlots = ele.slotChoices %>
+                                        <%= 'Unreserved' %>
+                                    <% } %> 
+                                <% } %>   
+                            <% }) %>
+                        </td>
+                        <td>
+                            <% currentReservationSlots.forEach( (ele) => { %>
+                                <%= ele.toLocaleDateString("es-US", { day: "numeric"}) %>/<%= ele.toLocaleString('es-US', { month: 'short' }) %>/<%= ele.toLocaleString('es-US', { year: "numeric" }) %>
+                                <%= ele.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) %> 
+                                <br />
+                            <% }) %>
                         </td>
                         <!-- <td data-id='<%= el.linkId %>'><a class='sendMail'>Send</a></td> -->
                         <!-- <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td> -->

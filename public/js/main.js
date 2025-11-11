@@ -41,7 +41,7 @@ function optionReservation(){
             //
             break
         case "send":
-            //resendEmail(linkId)
+            resendEmail(linkId)
             break
         default:
             console.log(`Sorry, ${selectedOption} is not an option.`);
@@ -70,7 +70,7 @@ async function deleteReservation(linkId){
 }
 
 async function resendEmail(linkId){
-    const id = this.parentNode.dataset.id
+    const id = linkId //this.parentNode.dataset.id
 
     try {
         const response = await fetch('../../setDates/resendEmail', {
