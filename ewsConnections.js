@@ -30,6 +30,7 @@ export async function sendEmail(recipient) {
   exch.Credentials = new ews.WebCredentials(process.env.exchangeUser, process.env.exchangePass);
 
   var msg = new EmailMessage(exch);
+  
   msg.Subject = recipient.subject;
   msg.Body = new ews.MessageBody(BodyType.HTML, recipient.body);
   msg.ToRecipients.Add(recipient.recipient)

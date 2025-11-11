@@ -50,6 +50,9 @@ app.use('/calendar', calendarRoutes)
 app.listen(process.env.PORT, ()=>{
     console.log(`Server is running on PORT: ${process.env.PORT} , you better catch it!`)
     //ewsTest.addCalendarEvent();
-    //ewsTest.sendEmail(emailContent);
-    //oldEwsTest();
+    // ewsTest.sendEmail({
+    //   subject: 'Cita Programado',
+    //   body: "tester",
+    //   recipient: '',
+    // });
 })

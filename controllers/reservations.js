@@ -30,10 +30,10 @@ export async function createTimeSlot (req, res){
         })
 
         let emailBody = `Proposito: ${req.body.subjectItem} &lt;br&gt;
-                    Ubicación: ${req.body.locationItem} &lt;br&gt;
-                    Citado por: ${req.user.email} &lt;br&gt;
-                    Horario: &lt;a href='#'&gt${linkId}&lt;/a&gt &lt;br&gt;
-                    Duración: ~${duration} minutos `
+                        Ubicación: ${req.body.locationItem} &lt;br&gt;
+                        Citado por: ${req.user.email} &lt;br&gt;
+                        Horario: &lt;a href='#'&gt;${linkId}&lt;/a&gt; &lt;br&gt;
+                        Duración: ~${duration} minutos `
         
         const emailContent = {
             subject: 'Cita Programado',

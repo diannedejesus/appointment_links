@@ -41,7 +41,7 @@ function optionReservation(){
             //
             break
         case "send":
-            resendEmail(linkId)
+            resendEmail(todoId)
             break
         default:
             console.log(`Sorry, ${selectedOption} is not an option.`);
@@ -73,11 +73,11 @@ async function resendEmail(linkId){
     const id = linkId //this.parentNode.dataset.id
 
     try {
-        const response = await fetch('../../setDates/resendEmail', {
+        const response = await fetch('../../sendEmail', {
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                'idFromJSFile': id,
+                'todoIdFromJSFile': id,
             })
         })
 
