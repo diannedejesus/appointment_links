@@ -137,20 +137,20 @@ export async function show_reservations (req,res){
 
 export async function show_setDates (req,res){
     try{
-        const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
+        //const reservationsMade = await ReservedSlotDB.find({owner: req.user.email})
         const slots = await TimeSlotDB.find({
             owner: req.user.email,
             slotChoices: {$gt: new Date()}
         })
-        const itemsLeft = await TimeSlotDB.countDocuments({
-            owner: req.user.email, 
-            selectedSlot: ''
-        })
+        // const itemsLeft = await TimeSlotDB.countDocuments({
+        //     owner: req.user.email, 
+        //     selectedSlot: ''
+        // })
         
         res.render('setDates.ejs', {
             timeSlots: slots,
-            left: itemsLeft,
-            reservations: reservationsMade
+            //left: itemsLeft,
+            //reservations: reservationsMade
         })
     }catch(error){
         console.log(error)

@@ -1,8 +1,11 @@
 const deleteButton = document.querySelectorAll('.del')
+const sendMail = document.querySelectorAll('.sendMail')
+const optionButton = document.querySelectorAll('.option')
+
 const signoutBtn = document.querySelector('.signout')
 const addDateBtn = document.querySelector('.addDate')
 const selectedSlot = document.querySelectorAll('.selectSlot')
-const sendMail = document.querySelectorAll('.sendMail')
+
 
 if(addDateBtn){addDateBtn.addEventListener('click', addTimeSlot)}
 //if(deleteButton){deleteButton.addEventListener('click', deleteReservation)}
@@ -12,6 +15,7 @@ Array.from(selectedSlot).forEach((el)=>{
     el.addEventListener('click', selectTimeSlot)
 })
 
+// -----------
 Array.from(sendMail).forEach((el)=>{
     el.addEventListener('click', resendEmail)
 })
@@ -20,8 +24,33 @@ Array.from(deleteButton).forEach((el)=>{
     el.addEventListener('click', deleteReservation)
 })
 
-async function deleteReservation(){
+Array.from(optionButton).forEach((el)=>{
+    el.addEventListener('click', optionReservation)
+})
+// ----------------
+
+function optionReservation(){
+    const selectedOption = document.querySelector('input[name="actionsMenu"]:checked').value;
     const todoId = this.parentNode.dataset.id
+
+    switch(selectedOption){
+        case "delete":
+            deleteReservation(todoId)
+            break
+        case "edit":
+            //
+            break
+        case "send":
+            //resendEmail(linkId)
+            break
+        default:
+            console.log(`Sorry, ${selectedOption} is not an option.`);
+    }
+}
+
+async function deleteReservation(linkId){
+    const todoId = linkId //this.parentNode.dataset.id
+
     try{
         const response = await fetch('../setDates/deleteDates', {
             method: 'delete',
@@ -30,13 +59,38 @@ async function deleteReservation(){
                 'todoIdFromJSFile': todoId
             })
         })
+
         const data = await response.json()
+
         console.log(data)
         location.reload()
     }catch(error){
         console.log(error)
     }
 }
+
+async function resendEmail(linkId){
+    const id = this.parentNode.dataset.id
+
+    try {
+        const response = await fetch('../../setDates/resendEmail', {
+            method: 'POST',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'idFromJSFile': id,
+            })
+        })
+
+        const data = await response.json()
+
+        console.log(data)
+        location.reload()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 async function signout(){
     try{
@@ -106,24 +160,7 @@ async function selectTimeSlot(){
     // }
 }
 
-async function resendEmail(){
-    const id = this.parentNode.dataset.id
 
-    try {
-        const response = await fetch('../../setDates/resendEmail', {
-            method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                'idFromJSFile': id,
-            })
-        })
-        const data = await response.json()
-        console.log(data)
-        location.reload()
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 // async function deleteReservation(){
 //     const item1 = this.parentNode.dataset.id;

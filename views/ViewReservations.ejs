@@ -14,19 +14,21 @@
         <header class="bookHeaderContainer">
             <h1>Reservaciones</h1>
         </header>
+
         <div class="wrapper">
             <section class="tableMenu">
                 <ul>
-                    <li><button>Delete</button></li>
-                    <li><button>Edit</button></li>
-                    <li><button>Send</button></li>
+                    <li><input id="delete" name="actionsMenu" type="radio" value="delete" /><label for="delete">Delete</label></li>
+                    <li><input id="edit" name="actionsMenu" type="radio" value="edit" /><label for="edit">Edit</label></li>
+                    <li><input id="send" name="actionsMenu" type="radio" value="send" /><label for="send">Send</label></li>
                 </ul>
             </section>
+
             <section>
                 <h2>Unreserved Dates: <%= left %></h2>
                 <table>
                     <tr>
-                        <!-- <th></th> -->
+                        <th></th>
                         <th>Name</th>
                         <!-- <th>email</th> -->
                         <!-- <th>location</th> -->
@@ -34,12 +36,12 @@
                         <th>Duration</th>
                         <th>Link</th>
                         <th>Status</th>
-                        <th>Email</th>
-                        <th>Remove</th>
+                        <!-- <th>Email</th> -->
+                        <!-- <th>Remove</th> -->
                     </tr>
                     <% reservations.forEach( (el) => { %>
                     <tr>
-                        <!-- <td><input type="checkbox" /></td> -->
+                        <td data-id='<%= el.linkId %>'><button class="option">#</button></td>
                         <td><%= el.name %></td>
                         <!-- <td><%= el.email %></td> -->
                         <!-- <td><%= el.location %></td> -->
@@ -58,8 +60,8 @@
                             <% } %>   
                         <% }) %>
                         </td>
-                        <td data-id='<%= el.linkId %>'><a class='sendMail'>Send</a></td>
-                        <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td>
+                        <!-- <td data-id='<%= el.linkId %>'><a class='sendMail'>Send</a></td> -->
+                        <!-- <td data-id='<%= el.linkId %>'><a class='del'>Remove</a></td> -->
                     </tr>
                     <% }) %>
                 </table>
