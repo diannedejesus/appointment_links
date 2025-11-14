@@ -14,16 +14,20 @@
     
     <%- include('partials/navigationBar') %>
 
-
-    <main class='clearfix'>
+    <main class="reservationsList">
         <section class="calendarContainer">
             <section class="calendarHeader">
                 <h1 class='calendarTitle'>WEEKLY SCHEDULE</h1>
                 <section class='monthDays'>
                     <% const daysInMonth = new Date(2025, +datemonth+1, 0).getDate(); %>
                     <ul>
-                        <% for(let i=1; i<=daysInMonth; i++){%> 
-                            <li class="<%= +datenum === i ? 'active' : ''  %>"><a href="?datenum=<%= i %>&datemonth=<%= datemonth %>"><%= i %></a></li>
+                        <% for(let i=1; i<=daysInMonth; i++){%>
+                            <% let obj = reservationList.find(o => `${o.date.getMonth()}-${o.date.getDate()}` === `${+datemonth}-${i}`) %>
+                            <% if(obj){%>
+                                <li class="<%= +datenum === i ? 'active' : ''  %> <%= 'highlight' %>"><a href="?datenum=<%= i %>&datemonth=<%= datemonth %>"><%= i %></a></li>
+                            <% }else{ %>
+                                <li class="<%= +datenum === i ? 'active' : ''  %>"><a href="?datenum=<%= i %>&datemonth=<%= datemonth %>"><%= i %></a></li>
+                            <% } %>
                         <%}%>
                     </ul>
                 </section>
@@ -35,7 +39,12 @@
                         <% for(let i=0; i<12; i++){%>
                             <% let date = new Date() %>
                             <% date.setMonth(i) %>
-                            <li class="<%= +datemonth === i ? 'active' : ''  %>"><a href="?datenum=<%= datenum %>&datemonth=<%= date.getMonth() %>"><%= date.toLocaleString('en-US', { month: 'short' }) %></a></li>
+                            <% let obj = reservationList.find(o => o.date.getMonth() === date.getMonth()) %>
+                            <% if(obj){%>
+                                <li class="<%= +datemonth === i ? 'active' : ''  %> <%= 'highlight' %>"><a href="?datenum=<%= datenum %>&datemonth=<%= date.getMonth() %>"><%= date.toLocaleString('en-US', { month: 'short' }) %></a></li>
+                            <% }else{ %>
+                                <li class="<%= +datemonth === i ? 'active' : ''  %>"><a href="?datenum=<%= datenum %>&datemonth=<%= date.getMonth() %>"><%= date.toLocaleString('en-US', { month: 'short' }) %></a></li>
+                            <% } %>
                         <%}%>
                     </ul>
                 </section>
@@ -47,7 +56,6 @@
                             <section class="weekDayContainer">
                                 <p><%= date.getDate() %></p>
                                 <p><%= days[date.getDay()] %></p>
-                                <% date.setDate(date.getDate() + 1) %>
                             </section>
                             <section class="weekTasksContainer">
                                 <% let obj = reservationList.find(o => `${o.date.getFullYear()}-${o.date.getMonth()}-${o.date.getDate()}` === `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`) %>
@@ -56,22 +64,8 @@
                                 <% } %>
                             </section>
                         </section>
+                        <% date.setDate(date.getDate() + 1) %>
                     <%}%>
-                    <section class='individualDateContainer'>
-                        <section class="weekDayContainer">
-                            <p><%= date.getDate() %></p>
-                            <p><%= days[date.getDay()] %></p>
-                            <% date.setDate(date.getDate() + 1) %>
-                        </section>
-                        <section class="weekDayContainer">
-                            <p>5</p>
-                            <p>Appointments</p>
-                        </section>
-                        <section class="weekTasksContainer">
-                            
-                            
-                        </section>
-                    </section>
                 </section>
             </section>
 

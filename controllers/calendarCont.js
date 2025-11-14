@@ -14,7 +14,7 @@ export async function getIndex (req,res){
         const reservationInfo = await userInfoDB.findOne({linkId: timeslots.linkId})
         let reservation
 
-        if(timeslots.selectTimeSlot){
+        if(timeslots.selectedSlot){
             let date = new Date(timeslots.selectedSlot)
 
             reservation = {
